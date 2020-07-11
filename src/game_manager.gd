@@ -1,10 +1,10 @@
 extends Node
 
+enum EntityTypes { RESOURCE, ENEMY }
+
 var selected_unit = null
 
-
 var total_food = 0
-
 
 func _ready():
 	pass
