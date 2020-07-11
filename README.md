@@ -21,6 +21,12 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 ## Themed UI/UX, "juice" & random shit
 - YELLOW JACKET SKIN because LA GRÈVE on en a marre that the neighbour harvests the same bushes as us
 
+- animation Pokémon evolve-like between two sprites 
+
+- skin content chemise hawaienne short tongs
+
+- Unit profile picture with **Pixel Art Jean Lasalle**
+
 - make units fatter by modifying X scale if they eat too much
 
 - The game can not be quit: There's a quit button but it trolls you

@@ -6,6 +6,7 @@ export var harvest_frequency_seconds = 1.5
 var harvesting = false
 var to_harvest = null
 
+signal gather_ticked
 
 func start_harvesting(resource):
 	to_harvest = resource
@@ -30,6 +31,8 @@ func harvest():
 	
 	to_harvest.get_gathered(harvest_amount)
 	GameManager.store_food(harvest_amount)
+	emit_signal("gather_ticked", harvest_amount)
+	
 
 
 func _on_CollectTimer_timeout():
