@@ -26,6 +26,7 @@ func move_to(position):
 
 
 func target(targeted):
+	print("targeting")
 	if targeted == self:
 		return
 		
@@ -56,9 +57,9 @@ func _is_target_in_range():
 
 func _process(_delta):
 	if _current_state == State.IDLE:
-		return
+		move_to(self.get_global_position() + Vector2(rand_range(-10, 10), rand_range(-10, 10)))
 		
-	if _current_state == State.MOVING:
+	elif _current_state == State.MOVING:
 		if _target_node != null:
 			if _is_target_in_range():
 				if _target_node != null and _target_node.get_entity_type() == Entity.Types.RESOURCE and _current_state != State.HARVESTING:
@@ -71,7 +72,7 @@ func _physics_process(_delta):
 		return
 	
 	# TODO: calculate target sprite width or handle collision in bush to stop movement?
-	if self == GameManager.selected_unit and not _is_movement_target_reached(): 
+	if not _is_movement_target_reached(): 
 		var _toto = move_and_slide(_get_distance_vec_to(_movement_target).normalized() * speed)
 	else:
 		_movement_target = null

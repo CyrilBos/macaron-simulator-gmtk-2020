@@ -21,7 +21,7 @@ func stop_gathering():
 	self.stop()
 
 
-func harvest():
+func _gather():
 	if to_harvest == null:
 		print("c pa b1 de harvest 1 truk null")
 		stop_gathering()
@@ -32,8 +32,7 @@ func harvest():
 	to_harvest.get_gathered(harvest_amount)
 	GameManager.store_food(harvest_amount)
 	emit_signal("gather_ticked", harvest_amount)
-	
 
 
 func _on_CollectTimer_timeout():
-	harvest()
+	_gather()
