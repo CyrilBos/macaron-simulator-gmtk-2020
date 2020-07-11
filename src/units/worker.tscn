@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/units/gather_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
@@ -6,10 +6,15 @@
 [ext_resource path="res://src/units/unit_selection.gd" type="Script" id=4]
 [ext_resource path="res://src/units/gather_label.gd" type="Script" id=5]
 [ext_resource path="res://src/units/food_detection.gd" type="Script" id=6]
+[ext_resource path="res://res/sprites/gilet_jaune.png" type="Texture" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
-flags = 4
 atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=2]
@@ -17,6 +22,11 @@ animations = [ {
 "frames": [ SubResource( 1 ) ],
 "loop": true,
 "name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "gilet",
 "speed": 5.0
 } ]
 
@@ -73,6 +83,7 @@ speed = 100.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
+animation = "gilet"
 script = ExtResource( 4 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]

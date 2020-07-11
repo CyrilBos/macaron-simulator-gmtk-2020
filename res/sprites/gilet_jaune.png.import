@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/worker.png-2d673d49f826382ca615914caa1a0816.stex"
+path="res://.import/gilet_jaune.png-a58fbb377913748bdd29c3293ea668b0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://res/sprites/worker.png"
-dest_files=[ "res://.import/worker.png-2d673d49f826382ca615914caa1a0816.stex" ]
+source_file="res://res/sprites/gilet_jaune.png"
+dest_files=[ "res://.import/gilet_jaune.png-a58fbb377913748bdd29c3293ea668b0.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -1,9 +1,14 @@
 extends KinematicBody2D
 
+export var animation = "default"
 export var selected = false # TODO: handle this
 export var speed = 20.0
 export var targetting_range = 32.0
-export var movement_delta = 15
+export var movement_delta = 5
+
+func _ready():
+	$AnimatedSprite.play(animation)
+
 
 enum State { MOVING, HARVESTING, IDLE } # TODO: Finite State Machine?
 var _current_state = State.IDLE
@@ -13,6 +18,7 @@ var _target_node = null
 
 func get_entity_type():
 	return Entity.Types.UNIT
+
 
 func move_to(position):
 	_target_node = null
@@ -57,7 +63,10 @@ func _is_target_in_range():
 
 func _process(_delta):
 	if _current_state == State.IDLE:
-		move_to(self.get_global_position() + Vector2(rand_range(-10, 10), rand_range(-10, 10)))
+		var global_pos = self.get_global_position()
+		var random_vector = Vector2(rand_range(-100, 100), rand_range(-100, 100))
+		print("start_pos = %s, rnd idle trgt = %s dist = %s " % [global_pos, global_pos + random_vector, _get_distance_to(random_vector)])
+		move_to(global_pos + random_vector)
 		
 	elif _current_state == State.MOVING:
 		if _target_node != null:
@@ -71,11 +80,14 @@ func _physics_process(_delta):
 	if _movement_target == null or _current_state != State.MOVING:
 		return
 	
+	print (_movement_target)
+	print(_is_movement_target_reached())
 	# TODO: calculate target sprite width or handle collision in bush to stop movement?
 	if not _is_movement_target_reached(): 
 		var _toto = move_and_slide(_get_distance_vec_to(_movement_target).normalized() * speed)
 	else:
 		_movement_target = null
+		_current_state = State.IDLE
 
 
 func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
