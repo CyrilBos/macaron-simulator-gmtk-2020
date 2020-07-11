@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="GMTK-uncontrollable-RTS"
+config/name="Macron Simulator"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 

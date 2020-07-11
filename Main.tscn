@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/collector.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/bush.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/units/collector.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/objects/bush.tscn" type="PackedScene" id=2]
 
 [node name="Node2D" type="Node2D"]
 
@@ -9,4 +9,4 @@
 position = Vector2( 87.307, 55.559 )
 
 [node name="Bush" parent="." instance=ExtResource( 2 )]
-position = Vector2( 502.44, 152.813 )
+position = Vector2( 186.474, 118.585 )

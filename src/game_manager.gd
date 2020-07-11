@@ -19,3 +19,8 @@ func target(targeted):
 
 func store_food(amount):
 	total_food += amount
+
+func _input(event):
+	if event is InputEventMouseButton and Input.is_mouse_button_pressed(BUTTON_LEFT):
+		if selected_unit != null:
+			selected_unit.move_to(event.position)

@@ -15,7 +15,7 @@ func get_gathered(harvest_speed):
 		if resource.is_gathered():
 			print("harvested")
 			emit_signal("harvested")
-			get_parent().queue_free()
+			queue_free()
 
 func get_entity_type():
 	return Entity.Types.RESOURCE;
