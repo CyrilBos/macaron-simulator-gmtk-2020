@@ -21,7 +21,6 @@ animations = [ {
 [node name="AnimatedSprite" type="AnimatedSprite"]
 frames = SubResource( 2 )
 script = ExtResource( 2 )
-start_amount = 25
 
 [node name="StaticBody" type="StaticBody2D" parent="."]
 input_pickable = true

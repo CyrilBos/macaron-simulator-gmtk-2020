@@ -36,4 +36,3 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="food_updated" from="." to="GUI/FoodLabel" method="_on_food_updated"]
