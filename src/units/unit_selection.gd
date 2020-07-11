@@ -13,7 +13,6 @@ func stop_drawing_selection():
 	update()
 
 func _draw():
-	print(self.get_global_position())
 	if draw_selection_shape:
 		var size = self.frames.get_frame(self.animation, self.frame).get_size()
 		var left_pos = Vector2.ZERO - Vector2(size.x / 2, size.y / 2)

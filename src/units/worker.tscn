@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/units/harvest_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
 [ext_resource path="res://res/sprites/worker.png" type="Texture" id=3]
 [ext_resource path="res://src/units/unit_selection.gd" type="Script" id=4]
 [ext_resource path="res://src/units/gather_label.gd" type="Script" id=5]
+[ext_resource path="res://src/units/food_detection.gd" type="Script" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -62,6 +63,9 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="CircleShape2D" id=5]
+radius = 215.257
+
 [node name="KinematicBody" type="KinematicBody2D"]
 input_pickable = true
 script = ExtResource( 2 )
@@ -96,6 +100,17 @@ __meta__ = {
 
 [node name="Animation" type="AnimationPlayer" parent="GatherLabel"]
 anims/Slidisappear = SubResource( 4 )
+
+[node name="FoodDetectionArea" type="Area2D" parent="."]
+input_pickable = false
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FoodDetectionArea"]
+shape = SubResource( 5 )
+disabled = true
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
 [connection signal="gather_ticked" from="GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherTimer" to="GatherTimer" method="_on_CollectTimer_timeout"]
+[connection signal="area_entered" from="FoodDetectionArea" to="FoodDetectionArea" method="_on_FoodDetectionArea_area_entered"]
+[connection signal="body_entered" from="FoodDetectionArea" to="FoodDetectionArea" method="_on_FoodDetectionArea_body_entered"]
+[connection signal="resource_detected" from="FoodDetectionArea" to="." method="_on_FoodDetectionArea_resource_detected"]

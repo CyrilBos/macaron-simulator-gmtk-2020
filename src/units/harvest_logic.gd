@@ -8,14 +8,14 @@ var to_harvest = null
 
 signal gather_ticked
 
-func start_harvesting(resource):
+func start_gathering(resource):
 	to_harvest = resource
 	self.start(harvest_frequency_seconds)
-	resource.connect("harvested", self, "_stop_harvesting")
+	resource.connect("harvested", self, "stop_gathering")
 	harvesting = true
 	
 	
-func stop_harvesting():
+func stop_gathering():
 	to_harvest = null
 	harvesting = false
 	self.stop()
@@ -24,7 +24,7 @@ func stop_harvesting():
 func harvest():
 	if to_harvest == null:
 		print("c pa b1 de harvest 1 truk null")
-		stop_harvesting()
+		stop_gathering()
 	
 	if harvesting == false:
 		return

@@ -8,13 +8,13 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 # Ideas
 
 ## TODO list
-- fix different units harvesting at the same time
+- idle AI
 - morale out-of-control
     - fighting reduces it,
     - someone else harvesting food from the same bush as you reduces it
-- idle AI
-- combat mechanic
 
+- combat mechanic
+- fix deselection stop last order given? 
 
 - NO multiple unit management! Because I don't have time and it's more "fun" to micromanage your baby units doing whatever they want
 

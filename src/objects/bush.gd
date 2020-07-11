@@ -1,4 +1,4 @@
-extends AnimatedSprite
+extends StaticBody2D
 
 const NaturalResource = preload("natural_resource.gd")
 
@@ -10,6 +10,9 @@ var resource = NaturalResource.new(start_amount)
 
 signal harvested
 
+func get_entity_type():
+	return Entity.Types.RESOURCE;
+
 func get_gathered(harvest_speed):
 		resource.reduce_amount(harvest_speed)
 		if resource.is_gathered():
@@ -17,9 +20,6 @@ func get_gathered(harvest_speed):
 			emit_signal("harvested")
 			queue_free()
 
-func get_entity_type():
-	return Entity.Types.RESOURCE;
-	
 func _on_StaticBody_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		GameManager.target(self)
