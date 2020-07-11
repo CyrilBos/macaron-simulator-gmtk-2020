@@ -21,8 +21,8 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 24.2016
-height = 23.2007
+radius = 12.8104
+height = 10.3671
 
 [sub_resource type="Animation" id=4]
 resource_name = "Slidisappear"
@@ -72,12 +72,11 @@ script = ExtResource( 2 )
 speed = 100.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
 script = ExtResource( 4 )
 
-[node name="CollisionRect" type="CollisionShape2D" parent="."]
-position = Vector2( 0.490044, 2.31494 )
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( -0.01, 0.749 )
 shape = SubResource( 3 )
 
 [node name="GatherTimer" type="Timer" parent="."]
@@ -107,7 +106,6 @@ script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodDetectionArea"]
 shape = SubResource( 5 )
-disabled = true
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
 [connection signal="gather_ticked" from="GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherTimer" to="GatherTimer" method="_on_CollectTimer_timeout"]

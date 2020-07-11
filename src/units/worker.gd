@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 export var selected = false # TODO: handle this
 export var speed = 20.0
-export var targetting_range = 50.0
-export var movement_delta = 10
+export var targetting_range = 32.0
+export var movement_delta = 15
 
 enum State { MOVING, HARVESTING, IDLE } # TODO: Finite State Machine?
 var _current_state = State.IDLE

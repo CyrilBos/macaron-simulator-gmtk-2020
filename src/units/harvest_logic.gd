@@ -1,7 +1,7 @@
 extends Timer
 
 export var harvest_amount = 5
-export var harvest_frequency_seconds = 1.5
+export var harvest_frequency_seconds = 0.75
 
 var harvesting = false
 var to_harvest = null

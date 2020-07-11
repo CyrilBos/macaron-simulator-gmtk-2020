@@ -4,6 +4,7 @@
 [ext_resource path="res://src/objects/bush.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=3]
+radius = 13.0673
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -26,6 +27,8 @@ script = ExtResource( 2 )
 position = Vector2( 1.55907, 1.33635 )
 shape = SubResource( 3 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Collider"]
+position = Vector2( -1.55907, -1.33635 )
+scale = Vector2( 1, 1 )
 frames = SubResource( 2 )
 [connection signal="input_event" from="." to="." method="_on_StaticBody_input_event"]
