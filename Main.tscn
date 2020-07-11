@@ -11,13 +11,22 @@ script = ExtResource( 4 )
 [node name="Starter" parent="." instance=ExtResource( 1 )]
 position = Vector2( 87.307, 55.559 )
 
+[node name="Starter2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 341.214, 105.449 )
+
+[node name="Starter3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 66.8163, 140.195 )
+
+[node name="Starter4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 181.742, 35.9592 )
+
 [node name="Bush" parent="." instance=ExtResource( 2 )]
 position = Vector2( 186.474, 118.585 )
-start_amount = 50
 
 [node name="GUI" type="MarginContainer" parent="."]
 margin_right = 1024.0
 margin_bottom = 55.0
+mouse_filter = 2
 custom_constants/margin_right = 16
 custom_constants/margin_top = 16
 custom_constants/margin_left = 16

@@ -10,6 +10,7 @@ func draw_selection():
 
 func stop_drawing_selection():
 	draw_selection_shape = false
+	update()
 
 func _draw():
 	print(self.get_global_position())

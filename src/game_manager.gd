@@ -10,6 +10,8 @@ func get_total_food():
 	return _total_food
 
 func select_unit(selected):
+	if selected_unit != null:
+		selected_unit.get_node("AnimatedSprite").stop_drawing_selection()
 	selected_unit = selected
 
 func target(targeted):
@@ -22,6 +24,7 @@ func store_food(amount):
 	print("food: %d" % _total_food)
 	emit_signal("food_updated", _total_food)
 
+	
 func _input(event):
 	if event is InputEventMouseButton and Input.is_mouse_button_pressed(BUTTON_LEFT):
 		if selected_unit != null:
