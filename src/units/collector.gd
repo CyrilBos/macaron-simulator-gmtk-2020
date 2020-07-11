@@ -63,9 +63,11 @@ func _process(delta):
 func _physics_process(delta):
 	if _movement_target == null or _current_state != State.MOVING:
 		return
-		
+	
+	print(self.to_string() + " " + GameManager.selected_unit.to_string())
+	print(self == GameManager.selected_unit)
 	# TODO: calculate target sprite width or handle collision in bush to stop movement?
-	if not _is_movement_target_reached(): 
+	if self == GameManager.selected_unit and not _is_movement_target_reached(): 
 		move_and_slide(_get_distance_vec_to(_movement_target).normalized() * speed)
 	else:
 		_movement_target = null

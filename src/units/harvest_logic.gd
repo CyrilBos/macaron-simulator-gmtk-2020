@@ -6,6 +6,7 @@ export var harvest_frequency_seconds = 1.5
 var harvesting = false
 var to_harvest = null
 
+
 func start_harvesting(resource):
 	to_harvest = resource
 	self.start(harvest_frequency_seconds)
