@@ -1,6 +1,6 @@
 extends Node
 
-enum EntityTypes { RESOURCE, ENEMY }
+signal food_updated
 
 var selected_unit = null
 
@@ -19,6 +19,8 @@ func target(targeted):
 
 func store_food(amount):
 	total_food += amount
+	print("food: %d" % total_food)
+	emit_signal("food_updated", total_food)
 
 func _input(event):
 	if event is InputEventMouseButton and Input.is_mouse_button_pressed(BUTTON_LEFT):

@@ -23,9 +23,15 @@ func target(targeted):
 	print("collector %s targets " % self.to_string() + _target_node.to_string())	
 
 func _get_distance_vec_to_target():
+	if _target_position == null:
+		return 0
+	
 	return _target_position - self.global_position
 
 func _is_target_in_range():
+	if _target_position == null:
+		return 0
+	
 	return _get_distance_vec_to_target().length() < target_delta
 
 func _process(delta):

@@ -1,13 +1,14 @@
 extends Timer
 
-export var harvest_speed = 5
+export var harvest_amount = 5
+export var harvest_frequency_seconds = 1.5
 
 var harvesting = false
 var to_harvest = null
 
 func start_harvesting(resource):
 	to_harvest = resource
-	self.start()
+	self.start(harvest_frequency_seconds)
 	resource.connect("harvested", self, "_stop_harvesting")
 	harvesting = true
 	
@@ -26,7 +27,8 @@ func harvest():
 	if harvesting == false:
 		return
 	
-	to_harvest.get_gathered(harvest_speed)
+	to_harvest.get_gathered(harvest_amount)
+	GameManager.store_food(harvest_amount)
 
 
 func _on_CollectTimer_timeout():

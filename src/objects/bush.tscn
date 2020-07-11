@@ -16,8 +16,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 13.4182, 13.9357 )
+[sub_resource type="CircleShape2D" id=3]
 
 [node name="AnimatedSprite" type="AnimatedSprite"]
 frames = SubResource( 2 )
@@ -27,7 +26,7 @@ start_amount = 25
 [node name="StaticBody" type="StaticBody2D" parent="."]
 input_pickable = true
 
-[node name="CollisionRect" type="CollisionShape2D" parent="StaticBody"]
+[node name="Collider" type="CollisionShape2D" parent="StaticBody"]
 position = Vector2( 1.55907, 1.33635 )
 shape = SubResource( 3 )
 [connection signal="input_event" from="StaticBody" to="." method="_on_StaticBody_input_event"]

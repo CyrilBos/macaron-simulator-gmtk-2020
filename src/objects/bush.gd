@@ -6,7 +6,7 @@ export var start_amount = 50
 
 var targeted = false
 
-var resource = NaturalResource.new(50)
+var resource = NaturalResource.new(start_amount)
 
 signal harvested
 

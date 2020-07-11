@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="GUI" type="MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 32.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FoodLabel" type="RichTextLabel" parent="."]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 1008.0
+margin_bottom = 16.0
+text = "Food: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}

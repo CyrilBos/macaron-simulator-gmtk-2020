@@ -1,12 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/units/collector.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/objects/bush.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/food_counter.gd" type="Script" id=3]
+[ext_resource path="res://src/game_manager.gd" type="Script" id=4]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node" type="Node"]
+script = ExtResource( 4 )
 
 [node name="Starter" parent="." instance=ExtResource( 1 )]
 position = Vector2( 87.307, 55.559 )
 
 [node name="Bush" parent="." instance=ExtResource( 2 )]
 position = Vector2( 186.474, 118.585 )
+start_amount = 50
+
+[node name="GUI" type="MarginContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 55.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FoodLabel" type="RichTextLabel" parent="GUI"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 1008.0
+margin_bottom = 39.0
+text = "Food: 0"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="food_updated" from="." to="GUI/FoodLabel" method="_on_food_updated"]
