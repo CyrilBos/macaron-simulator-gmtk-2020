@@ -15,6 +15,9 @@ func move_to(position):
 	_current_state = State.MOVING
 
 func target(targeted):
+	if targeted == self:
+		return
+		
 	_target_node = targeted
 	_target_position = targeted.get_global_position()
 	print("collector %s targets " % self.to_string() + _target_node.to_string())	
@@ -45,7 +48,6 @@ func _physics_process(delta):
 		
 	# TODO: calculate target sprite width or handle collision in bush to stop movement?
 	if not _is_target_in_range(): 
-	# print("dir = %s - %s = %s" % [target.get_global_position(), self.global_position, direction.normalized()])
 		move_and_slide(_get_distance_vec_to_target().normalized() * speed)
 	else:
 		_target_position = null
@@ -54,3 +56,4 @@ func _on_KinematicBody_input_event(viewport, event, shape_idx):
 	if not selected and Input.is_mouse_button_pressed(BUTTON_LEFT):
 		print("collector selected " + self.to_string())
 		GameManager.select_unit(self)
+		$AnimatedSprite.draw_selection()
