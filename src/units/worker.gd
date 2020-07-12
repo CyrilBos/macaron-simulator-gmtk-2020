@@ -8,10 +8,15 @@ export var movement_delta = 10
 onready var morale_bar = $MoraleBar
 onready var gather_logic = $GatherLabel/GatherTimer
 
-enum State { MOVING, GATHERING, IDLE } # TODO: Finite State Machine?
+enum State { MOVING, GATHERING, IDLE, GILET } # TODO: Finite State Machine?
 var _current_state = State.IDLE
 
 signal state_changed
+
+func GILET_JAUNE():
+	_switch_state(State.GILET)
+	$AnimatedSprite.play("gilet")
+
 
 func _ready():
 	$AnimatedSprite.play(animation)
@@ -35,10 +40,8 @@ func is_idle():
 func is_working():
 	return _current_state == State.GATHERING
 
-
-func _switch_state(new_state):
-	_current_state = new_state	
-	emit_signal("state_changed", new_state)
+func get_morale():
+	morale_bar.get_value()
 
 
 func move_to(position):
@@ -62,6 +65,14 @@ func target(targeted):
 	print("worker %s targets " % self.to_string() + _target_node.to_string())	
 
 
+func seek(poor_dude):
+	target(poor_dude)
+
+func _switch_state(new_state):
+	_current_state = new_state	
+	emit_signal("state_changed", new_state)
+
+	
 func _get_distance_vec_to(position):
 	return position - self.global_position
 
@@ -116,8 +127,7 @@ func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
 
 func _on_FoodDetectionArea_resource_detected(resource):
 	if _current_state == State.IDLE:
-		target(resource)
-		
+		target(resource) #TODO: BUG NO RETARGET NEW FOOD WHEN DONE HARVESTING
 
 
 func _on_GatherTimer_stopped_gathering():

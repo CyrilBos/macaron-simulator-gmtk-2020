@@ -8,11 +8,15 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 # Ideas
 
 ## TODO list
-1. morale out-of-control
+1. transfo gilet morale à 0
+2. gain morale while fighting
+3. retransfo worker at 50 morale? (100?)
+4. resources respawn
+5. JUICE or idle AI to be continued OR combat mechanic
+
+6. morale out-of-control
     - fighting reduces it,
     - someone else harvesting food from the same bush as you reduces it
-2. resources respawn
-3. JUICE or idle AI to be continued OR combat mechanic
 
 - enemy?
 

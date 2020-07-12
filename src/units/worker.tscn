@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/units/gather_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://src/units/morale.gd" type="Script" id=8]
 [ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
 [ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
+[ext_resource path="res://src/units/seek_and_destroy.gd" type="Script" id=11]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -78,6 +79,9 @@ tracks/2/keys = {
 [sub_resource type="CircleShape2D" id=6]
 radius = 95.7022
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 229.547
+
 [node name="Worker" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
 input_pickable = true
@@ -121,6 +125,14 @@ script = ExtResource( 6 )
 position = Vector2( -0.771458, -0.503342 )
 shape = SubResource( 6 )
 
+[node name="GiletArea" type="Area2D" parent="."]
+input_pickable = false
+script = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GiletArea"]
+shape = SubResource( 7 )
+disabled = true
+
 [node name="MoraleBar" type="TextureProgress" parent="."]
 margin_left = -17.4319
 margin_top = -25.2137
@@ -137,6 +149,7 @@ __meta__ = {
 
 [node name="IdleMoraleTimer" type="Timer" parent="MoraleBar"]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
+[connection signal="state_changed" from="." to="GiletArea" method="_on_Worker_state_changed"]
 [connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="stopped_gathering" from="GatherLabel/GatherTimer" to="." method="_on_GatherTimer_stopped_gathering"]
@@ -144,4 +157,5 @@ __meta__ = {
 [connection signal="area_entered" from="FoodDetectionArea" to="FoodDetectionArea" method="_on_FoodDetectionArea_area_entered"]
 [connection signal="body_entered" from="FoodDetectionArea" to="FoodDetectionArea" method="_on_FoodDetectionArea_body_entered"]
 [connection signal="resource_detected" from="FoodDetectionArea" to="." method="_on_FoodDetectionArea_resource_detected"]
+[connection signal="body_entered" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_entered"]
 [connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]

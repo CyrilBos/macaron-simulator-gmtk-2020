@@ -1,16 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/units/worker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/objects/salad.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/food_counter.gd" type="Script" id=3]
 [ext_resource path="res://src/game_manager.gd" type="Script" id=4]
+[ext_resource path="res://res/sprites/jean-didier.png" type="Texture" id=5]
+[ext_resource path="res://res/fonts/PressStart2P-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://src/ui/profile_picture.gd" type="Script" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 6 )
 
 [node name="Node" type="Node"]
 script = ExtResource( 4 )
 
 [node name="GILETJAUUUNE" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1046.97, 419.6 )
-animation = "gilet"
 
 [node name="Worker" parent="." instance=ExtResource( 1 )]
 position = Vector2( 185.836, 179.351 )
@@ -19,13 +25,13 @@ position = Vector2( 185.836, 179.351 )
 position = Vector2( 274.474, 227.585 )
 
 [node name="Salad2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 202.754, 518.982 )
+position = Vector2( 175.754, 274.982 )
 
 [node name="Salad3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 680.918, 30.9022 )
+position = Vector2( 123.918, 94.9022 )
 
 [node name="Salad4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 650.646, 144.358 )
+position = Vector2( 284.646, 146.358 )
 
 [node name="Salad5" parent="." instance=ExtResource( 2 )]
 position = Vector2( 265.984, 34.9136 )
@@ -49,6 +55,25 @@ margin_right = 1008.0
 margin_bottom = 39.0
 text = "Food: 0"
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProfilePicture" type="Sprite" parent="GUI"]
+visible = false
+position = Vector2( 69.2956, 640.04 )
+scale = Vector2( 0.377118, 0.308023 )
+texture = ExtResource( 5 )
+script = ExtResource( 7 )
+
+[node name="MoraleLabel" type="Label" parent="GUI/ProfilePicture"]
+visible = false
+margin_left = 175.151
+margin_top = 132.178
+margin_right = 1231.15
+margin_bottom = 196.178
+custom_fonts/font = SubResource( 1 )
+text = "Morale: il est content"
 __meta__ = {
 "_edit_use_anchors_": false
 }

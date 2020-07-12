@@ -34,6 +34,8 @@ func _gain_morale_when_idle():
 
 func _reduce_morale(malus):
 	self.set_value(self.get_value() - malus)
+	if self.get_value() <= 0:
+		worker.GILET_JAUNE()
 	
 	
 func _add_morale(bonus):

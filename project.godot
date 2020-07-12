@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Macron Simulator"
+config/name="Mokron Simulator"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
