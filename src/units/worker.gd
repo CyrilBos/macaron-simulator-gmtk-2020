@@ -41,7 +41,7 @@ func is_working():
 	return _current_state == State.GATHERING
 
 func get_morale():
-	morale_bar.get_value()
+	return morale_bar.get_value()
 
 
 func move_to(position):
