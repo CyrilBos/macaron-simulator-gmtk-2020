@@ -1,35 +1,35 @@
 extends Timer
 
-export var harvest_amount = 5
+export var harvest_amount = 25
 export var harvest_frequency_seconds = 0.75
 
 onready var worker = get_parent().get_parent()
 
 var salad_detector = null setget set_salad_detector
 
-var harvesting = false
+var gathering = false
 var to_harvest = null
 
 signal gather_ticked
-signal stopped_gathering
 
 
 func set_salad_detector(value):
 	salad_detector = value
 
 
-func start_gathering(resource):
-	to_harvest = resource
-	self.start(harvest_frequency_seconds)
-	resource.connect("harvested", self, "stop_gathering")
-	harvesting = true
+func gather(resource):
+	if to_harvest != resource:
+		to_harvest = resource
+		self.start(harvest_frequency_seconds)
+		resource.connect("harvested", self, "_switch_salad_or_stop_gathering")
+		
+	gathering = true
 
 	
 func _stop_gathering():
 	to_harvest = null
-	harvesting = false
-
-	emit_signal("stopped_gathering")
+	gathering = false
+	self.stop()
 
 
 func _switch_salad_or_stop_gathering():
@@ -38,8 +38,10 @@ func _switch_salad_or_stop_gathering():
 	var next = salad_detector.get_next_detected_salad()
 	if next == null:
 		_stop_gathering()
+		worker.reset_state()
 	else:
-		start_gathering(next)
+		print("%s targets next salad %s" % [self, next])
+		worker.target(next)
 	
 
 func _gather():
@@ -47,7 +49,7 @@ func _gather():
 		print("c pa b1 de harvest 1 truk null")
 		_switch_salad_or_stop_gathering()
 	
-	if harvesting == false:
+	if gathering == false:
 		return
 	
 	to_harvest.get_gathered(harvest_amount)
@@ -60,10 +62,10 @@ func _on_CollectTimer_timeout():
 
 
 func _on_Worker_target_out_of_reach():
-	if not worker.is_moving():
+	if gathering:
 		_stop_gathering()
 
 
 func _on_Worker_state_changed(new_state):
-	if new_state != worker.State.GATHERING:
+	if gathering and new_state != worker.State.GATHERING:
 		_stop_gathering()

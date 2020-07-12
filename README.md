@@ -8,13 +8,12 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 # Ideas
 
 ## TODO list
-1. fighting when gilet state
-2. fix auto-work with salad detection
-3. gain morale while fighting
-4. retransfo worker at 50 morale? (100?)
-5. JUICE or idle AI to be continued OR combat mechanic
+1. retransfo worker at 50 morale? (100?)
+2. gain morale while fighting
+3. flee AI when being beaten up / lose morale
+4. JUICE or idle AI to be continued OR combat mechanic
 
-6. morale out-of-control
+4. morale out-of-control
     - fighting reduces it,
     - someone else harvesting food from the same bush as you reduces it
 

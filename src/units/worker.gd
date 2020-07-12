@@ -11,6 +11,7 @@ export var targetting_range = 64.0
 export var fighting_range = 128.0
 export var movement_delta = 10
 
+onready var _sprite = $AnimatedSprite
 onready var morale_bar = $MoraleBar
 onready var gather_logic = $GatherLabel/GatherTimer
 onready var fight_logic = $HealthBar
@@ -25,7 +26,7 @@ signal target_out_of_reach
 
 func GILET_JAUNE():
 	_gilet = true
-	$AnimatedSprite.play("gilet")
+	_sprite.play("gilet")
 	emit_signal("gilet_changed", true)
 
 
@@ -37,12 +38,21 @@ func _ready():
 		GILET_JAUNE()
 		
 	gather_logic.set_salad_detector($SaladDetector)
+	
+	GameManager.connect("unit_selected", self, "_on_new_unit_selected")
 
 
 var selected = false
 
 var _movement_target = null
 var _target_node = null
+
+func reset_state():
+	_switch_state(State.IDLE)
+
+func _on_new_unit_selected(selected_unit):
+	if self != selected_unit:
+		_switch_state(State.IDLE)
 
 func is_moving():
 	return _current_state == State.MOVING;
@@ -105,13 +115,16 @@ func _is_movement_target_reached():
 func _is_target_in_range():	
 	return _get_distance_to(_target_node.get_global_position()) < targetting_range
 
+
 func _gather():
-	gather_logic.start_gathering(_target_node)
+	gather_logic.gather(_target_node)
 	_switch_state(State.GATHERING)
+
 
 func _fight():
 	fight_logic.fight(_target_node)
 	_switch_state(State.FIGHTING)
+
 
 func _process(_delta):
 	if _current_state == State.IDLE:
@@ -147,13 +160,25 @@ func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
 	if not selected and Input.is_mouse_button_pressed(BUTTON_LEFT):
 		print("collector selected " + self.to_string())
 		GameManager.select_unit(self)
-		$AnimatedSprite.draw_selection()
+		_sprite.draw_selection()
 
 
 func _on_FoodDetectionArea_resource_detected(resource):
 	if _current_state == State.IDLE:
-		target(resource) #TODO: BUG NO RETARGET NEW FOOD WHEN DONE HARVESTING
+		target(resource)
+
+
+func _on_DeathSound_finished():
+	_switch_state(State.IDLE)
 
 
 func _on_HealthBar_death():
 	queue_free()
+
+
+func _on_HealthBar_killed():
+	_switch_state(State.IDLE)
+
+
+func _on_GatherTimer_stopped_gathering():
+	_switch_state(State.IDLE)

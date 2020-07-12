@@ -62,3 +62,7 @@ func _on_Worker_state_changed(new_state):
 		_start_idle_morale_gain()
 	elif new_state == worker.State.GATHERING:
 		_start_working_morale_loss()
+
+
+func _on_HealthBar_lost_health(dmg):
+	_reduce_morale(dmg)

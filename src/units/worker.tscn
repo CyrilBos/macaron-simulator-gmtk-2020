@@ -1,17 +1,18 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/units/gather_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
 [ext_resource path="res://res/sprites/worker.png" type="Texture" id=3]
 [ext_resource path="res://src/units/unit_selection.gd" type="Script" id=4]
 [ext_resource path="res://src/units/gather_label.gd" type="Script" id=5]
-[ext_resource path="res://src/units/food_detection.gd" type="Script" id=6]
+[ext_resource path="res://src/units/salad_detector.gd" type="Script" id=6]
 [ext_resource path="res://res/sprites/gilet_jaune.png" type="Texture" id=7]
 [ext_resource path="res://src/units/morale.gd" type="Script" id=8]
 [ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
 [ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
 [ext_resource path="res://src/units/seek_and_destroy.gd" type="Script" id=11]
 [ext_resource path="res://src/units/fight_logic.gd" type="Script" id=12]
+[ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=13]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -131,6 +132,7 @@ input_pickable = false
 script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GiletArea"]
+position = Vector2( -0.890869, 0 )
 shape = SubResource( 7 )
 disabled = true
 
@@ -165,10 +167,13 @@ __meta__ = {
 }
 
 [node name="AttackTimer" type="Timer" parent="HealthBar"]
+
+[node name="KillSound" type="AudioStreamPlayer2D" parent="HealthBar"]
+stream = ExtResource( 13 )
 [connection signal="gilet_changed" from="." to="GiletArea" method="_on_Worker_gilet_changed"]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
-[connection signal="state_changed" from="." to="GatherLabel/GatherTimer" method="_on_Worker_state_changed"]
 [connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
+[connection signal="state_changed" from="." to="GatherLabel/GatherTimer" method="_on_Worker_state_changed"]
 [connection signal="target_out_of_reach" from="." to="HealthBar" method="_on_Worker_target_out_of_reach"]
 [connection signal="target_out_of_reach" from="." to="GatherLabel/GatherTimer" method="_on_Worker_target_out_of_reach"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
@@ -179,4 +184,6 @@ __meta__ = {
 [connection signal="body_entered" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_entered"]
 [connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]
 [connection signal="death" from="HealthBar" to="." method="_on_HealthBar_death"]
+[connection signal="killed" from="HealthBar" to="." method="_on_HealthBar_killed"]
+[connection signal="lost_health" from="HealthBar" to="MoraleBar" method="_on_HealthBar_lost_health"]
 [connection signal="timeout" from="HealthBar/AttackTimer" to="HealthBar" method="_on_AttackTimer_timeout"]

@@ -73,15 +73,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Worker2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1046.97, 419.6 )
-
-[node name="Gilet" parent="." instance=ExtResource( 1 )]
-position = Vector2( 928.451, 297.312 )
-initial_morale = 0
+[node name="MarginContainer" type="MarginContainer" parent="GUI"]
+margin_right = 40.0
+margin_bottom = 40.0
 
 [node name="Worker" parent="." instance=ExtResource( 1 )]
-position = Vector2( 185.836, 179.351 )
+position = Vector2( 154.356, 88.351 )
 
 [node name="Salad" parent="." instance=ExtResource( 2 )]
 position = Vector2( 274.474, 227.585 )
@@ -91,13 +88,13 @@ start_amount = 15
 position = Vector2( 175.754, 274.982 )
 
 [node name="Salad3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 123.918, 94.9022 )
+position = Vector2( 579.918, 297.902 )
 
 [node name="Salad4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 284.646, 146.358 )
+position = Vector2( 432.646, 81.358 )
 
 [node name="Salad5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 265.984, 34.9136 )
+position = Vector2( 476.984, 315.914 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -105,5 +102,6 @@ current = true
 
 [node name="SaladSpawner" type="Timer" parent="."]
 script = ExtResource( 8 )
+spawn_freq = 15
 [connection signal="unit_selected" from="." to="GUI/HSplitContainer/ProfilePicture" method="_on_GameManager_unit_selected"]
 [connection signal="timeout" from="SaladSpawner" to="SaladSpawner" method="_on_SaladSpawner_timeout"]

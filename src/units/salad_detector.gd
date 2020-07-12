@@ -10,6 +10,7 @@ func get_next_detected_salad():
 	
 	return salads[0]
 
+
 func _is_body_salad(body):
 	return body.get_entity_type() == Entity.Types.RESOURCE
 
@@ -22,4 +23,8 @@ func _on_FoodDetectionArea_body_entered(body):
 
 func _on_FoodDetectionArea_body_exited(body):
 	if _is_body_salad(body):
-		salads.remove(salads.bsearch(body))
+		var salad_idx = salads.bsearch(body)
+		if salad_idx >= salads.size():
+			return
+		else:
+			salads.remove(salad_idx)
