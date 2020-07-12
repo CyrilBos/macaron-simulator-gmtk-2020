@@ -37,7 +37,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 12.8104
+radius = 10.8325
 height = 10.3671
 
 [sub_resource type="Animation" id=5]
@@ -48,7 +48,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -60,7 +60,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( -24, -54 ), Vector2( -24, -74 ) ]
@@ -72,7 +72,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -101,10 +101,10 @@ shape = SubResource( 4 )
 [node name="GatherLabel" type="Label" parent="."]
 visible = false
 margin_left = -24.0
-margin_top = -44.0
+margin_top = -74.0
 margin_right = 25.0
-margin_bottom = -30.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
+margin_bottom = -60.0
+custom_colors/font_color = Color( 1, 1, 1, 0 )
 text = "+5 food"
 align = 1
 valign = 1
@@ -177,11 +177,14 @@ stream = ExtResource( 13 )
 [connection signal="target_out_of_reach" from="." to="HealthBar" method="_on_Worker_target_out_of_reach"]
 [connection signal="target_out_of_reach" from="." to="GatherLabel/GatherTimer" method="_on_Worker_target_out_of_reach"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
 [connection signal="body_entered" from="SaladDetector" to="SaladDetector" method="_on_FoodDetectionArea_body_entered"]
 [connection signal="body_exited" from="SaladDetector" to="SaladDetector" method="_on_FoodDetectionArea_body_exited"]
 [connection signal="resource_detected" from="SaladDetector" to="." method="_on_FoodDetectionArea_resource_detected"]
 [connection signal="body_entered" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_entered"]
+[connection signal="body_exited" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_exited"]
+[connection signal="new_enemy" from="GiletArea" to="." method="_on_GiletArea_new_enemy"]
 [connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]
 [connection signal="death" from="HealthBar" to="." method="_on_HealthBar_death"]
 [connection signal="killed" from="HealthBar" to="." method="_on_HealthBar_killed"]

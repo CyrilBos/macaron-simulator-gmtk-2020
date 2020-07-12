@@ -20,14 +20,6 @@ func _start_idle_morale_gain():
 	morale_timer.start(idle_morale_gain_freq)
 
 
-func _start_working_morale_loss():
-	morale_timer.start(working_morale_loss_freq)
-
-
-func _lose_morale_when_working():
-	_reduce_morale(working_morale_loss)
-
-
 func _gain_morale_when_idle():
 	_add_morale(idle_morale_gain)
 
@@ -43,10 +35,8 @@ func _add_morale(bonus):
 	
 	
 func _on_IdleMoraleTimer_timeout():
-	if _current_worker_state == worker.State.IDLE:
+	if _current_worker_state == worker.State.IDLE and not worker.is_gilet():
 		_gain_morale_when_idle()
-	elif _current_worker_state == worker.State.GATHERING:
-		_lose_morale_when_working()
 
 
 func _on_Worker_state_changed(new_state):
@@ -60,9 +50,11 @@ func _on_Worker_state_changed(new_state):
 	
 	if new_state == worker.State.IDLE && not worker.is_gilet():
 		_start_idle_morale_gain()
-	elif new_state == worker.State.GATHERING:
-		_start_working_morale_loss()
 
 
 func _on_HealthBar_lost_health(dmg):
-	_reduce_morale(dmg)
+	_reduce_morale(dmg * 2)
+
+
+func _on_GatherTimer_gather_ticked(harvest_amount):
+	_reduce_morale(working_morale_loss)

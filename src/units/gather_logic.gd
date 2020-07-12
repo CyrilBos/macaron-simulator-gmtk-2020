@@ -1,7 +1,7 @@
 extends Timer
 
-export var harvest_amount = 25
-export var harvest_frequency_seconds = 0.75
+export var harvest_amount = 5
+export var harvest_frequency_seconds = 0.5
 
 onready var worker = get_parent().get_parent()
 

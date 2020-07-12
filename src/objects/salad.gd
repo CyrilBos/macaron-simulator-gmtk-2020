@@ -2,7 +2,7 @@ extends StaticBody2D
 
 const NaturalResource = preload("natural_resource.gd")
 
-export var start_amount = 50
+export var start_amount = 25
 
 var targeted = false
 

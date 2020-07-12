@@ -8,6 +8,7 @@ var health = RangeAttribute.new(0, max_health)
 
 onready var attack_timer = $AttackTimer
 onready var kill_sound = $KillSound
+onready var seeker = get_parent().get_node("GiletArea")
 
 var target = null
 var in_range = false
@@ -19,8 +20,8 @@ signal killed
 func fight(to_fight):
 	if target == null:
 		target = to_fight
+		attack_timer.start(atk_freq)
 	
-	attack_timer.start(atk_freq)
 	in_range = true
 	
 	

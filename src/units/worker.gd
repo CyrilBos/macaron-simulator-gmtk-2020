@@ -15,6 +15,7 @@ onready var _sprite = $AnimatedSprite
 onready var morale_bar = $MoraleBar
 onready var gather_logic = $GatherLabel/GatherTimer
 onready var fight_logic = $HealthBar
+onready var seek_detector = $GiletArea
 
 var _current_state = State.IDLE
 
@@ -27,6 +28,7 @@ signal target_out_of_reach
 func GILET_JAUNE():
 	_gilet = true
 	_sprite.play("gilet")
+	reset_state()
 	emit_signal("gilet_changed", true)
 
 
@@ -53,6 +55,9 @@ func reset_state():
 func _on_new_unit_selected(selected_unit):
 	if self != selected_unit:
 		_switch_state(State.IDLE)
+		
+	if is_gilet():
+		seek(seek_detector.next_enemy())
 
 func is_moving():
 	return _current_state == State.MOVING;
@@ -79,7 +84,7 @@ func move_to(position):
 
 
 func target(targeted):
-	if targeted == self:
+	if targeted == self || targeted == null:
 		return
 		
 	_target_node = targeted
@@ -131,22 +136,26 @@ func _process(_delta):
 		var global_pos = self.get_global_position()
 		var random_vector = Vector2(rand_range(-100, 100), rand_range(-100, 100))
 		move_to(global_pos + random_vector)
+		return
 		
-	elif _current_state == State.MOVING:
-		if _target_node != null:
-			if _is_target_in_range():
-				if _target_node.get_entity_type() == Entity.Types.RESOURCE:
-					_gather()
-				
-				elif _target_node.get_entity_type() == Entity.Types.UNIT:
-					_fight()
-			else:
-				emit_signal("target_out_of_reach")
+	if _target_node != null:
+		if _is_target_in_range():
+			if _target_node.get_entity_type() == Entity.Types.RESOURCE:
+				_gather()
+			
+			elif _target_node.get_entity_type() == Entity.Types.UNIT:
+				_fight()
+		else:
+			_switch_state(State.MOVING)
+			emit_signal("target_out_of_reach")
 
 
 func _physics_process(_delta):
 	if _movement_target == null or _current_state != State.MOVING:
 		return
+	
+	if _target_node != null:
+		_movement_target = _target_node.get_global_position()
 	
 	# TODO: calculate target sprite width or handle collision in bush to stop movement?
 	if not _is_movement_target_reached(): 
@@ -164,7 +173,7 @@ func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
 
 
 func _on_FoodDetectionArea_resource_detected(resource):
-	if _current_state == State.IDLE:
+	if _current_state == State.IDLE and not is_gilet():
 		target(resource)
 
 
@@ -182,3 +191,9 @@ func _on_HealthBar_killed():
 
 func _on_GatherTimer_stopped_gathering():
 	_switch_state(State.IDLE)
+
+
+func _on_GiletArea_new_enemy(enemy):
+	if is_gilet():
+		if _target_node == null:
+			seek(enemy)

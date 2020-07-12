@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/units/worker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/objects/salad.tscn" type="PackedScene" id=2]
@@ -8,9 +8,14 @@
 [ext_resource path="res://res/fonts/PressStart2P-Regular.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://src/ui/profile_picture.gd" type="Script" id=7]
 [ext_resource path="res://src/salad_spawner.gd" type="Script" id=8]
+[ext_resource path="res://unit_spawner.gd" type="Script" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 28
 font_data = ExtResource( 6 )
 
 [node name="GameManager" type="Node"]
@@ -18,7 +23,7 @@ script = ExtResource( 4 )
 
 [node name="GUI" type="Control" parent="."]
 anchor_right = 1.0
-margin_bottom = 106.0
+anchor_bottom = 1.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -74,11 +79,41 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="GUI"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -265.0
+mouse_filter = 2
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="GUI/MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 1264.0
+margin_bottom = 249.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="GUI/MarginContainer/HSplitContainer"]
+margin_right = 1248.0
+margin_bottom = 233.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 2 )
+text = "- left click to select a unit
+- when selected, right click to move or target a salad to harvest.
+- ...
+- Beware of a possible uprising... What is that orange bar? ;)
+- Profit?"
+autowrap = true
+clip_text = true
 
 [node name="Worker" parent="." instance=ExtResource( 1 )]
-position = Vector2( 154.356, 88.351 )
+position = Vector2( 541.459, 216.496 )
 
 [node name="Salad" parent="." instance=ExtResource( 2 )]
 position = Vector2( 274.474, 227.585 )
@@ -102,6 +137,8 @@ current = true
 
 [node name="SaladSpawner" type="Timer" parent="."]
 script = ExtResource( 8 )
-spawn_freq = 15
+
+[node name="UnitSpawner" type="Node" parent="."]
+script = ExtResource( 9 )
 [connection signal="unit_selected" from="." to="GUI/HSplitContainer/ProfilePicture" method="_on_GameManager_unit_selected"]
 [connection signal="timeout" from="SaladSpawner" to="SaladSpawner" method="_on_SaladSpawner_timeout"]
