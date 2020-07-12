@@ -21,11 +21,7 @@ func _start_idle_morale_gain():
 
 
 func _start_working_morale_loss():
-	morale_timer.start(idle_morale_gain_freq)
-
-
-func stop_idle_morale_gain():
-	morale_timer.stop()
+	morale_timer.start(working_morale_loss_freq)
 
 
 func _lose_morale_when_working():
@@ -52,6 +48,12 @@ func _on_IdleMoraleTimer_timeout():
 
 
 func _on_Worker_state_changed(new_state):
+	if new_state == worker.State.MOVING:
+		return
+	
+	if new_state == _current_worker_state:
+		return
+			
 	_current_worker_state = new_state
 	
 	if new_state == worker.State.IDLE:
