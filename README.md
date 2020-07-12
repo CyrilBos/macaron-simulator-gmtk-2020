@@ -8,29 +8,32 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 # Ideas
 
 ## TODO list
-- idle AI to be continued
-- resources respawn
-- morale out-of-control
+1. morale out-of-control
     - fighting reduces it,
     - someone else harvesting food from the same bush as you reduces it
-
-- combat mechanic
+2. resources respawn
+3. JUICE or idle AI to be continued OR combat mechanic
 
 - enemy?
 
 - NO multiple unit management! Because I don't have time and it's more "fun" to micromanage your baby units doing whatever they want
 
-## Themed UI/UX, "juice" & random shit
-- YELLOW JACKET SKIN because LA GRÈVE on en a marre that the neighbour harvests the same bushes as us
+## known bugs
+- food label goes under sprites
 
-- animation Pokémon evolve-like between two sprites 
+## Themed UI/UX, "juice" & random shit
+- animation Pokémon evolve-like between two sprites when transitioning to gilet
+
+- Unit profile picture with **Pixel Art Jeanne La Sale**
+
+- boire de la 86
 
 - skin content chemise hawaienne short tongs
-
-- Unit profile picture with **Pixel Art Jean Lasalle**
 
 - make units fatter by modifying X scale if they eat too much
 
 - The game can not be quit: There's a quit button but it trolls you
 
 
+Done:
+- YELLOW JACKET SKIN because LA GRÈVE on en a marre that the neighbour harvests the same bushes as us

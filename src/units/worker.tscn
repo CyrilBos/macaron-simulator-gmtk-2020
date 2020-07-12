@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/units/gather_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
@@ -7,35 +7,37 @@
 [ext_resource path="res://src/units/gather_label.gd" type="Script" id=5]
 [ext_resource path="res://src/units/food_detection.gd" type="Script" id=6]
 [ext_resource path="res://res/sprites/gilet_jaune.png" type="Texture" id=7]
+[ext_resource path="res://src/units/morale.gd" type="Script" id=8]
+[ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
+[ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ SubResource( 1 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "gilet",
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 12.8104
 height = 10.3671
 
-[sub_resource type="Animation" id=4]
-resource_name = "Slidisappear"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:custom_colors/font_color")
 tracks/0/interp = 1
@@ -73,32 +75,29 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CircleShape2D" id=5]
-radius = 215.257
+[sub_resource type="CircleShape2D" id=6]
+radius = 95.7022
 
-[node name="KinematicBody" type="KinematicBody2D"]
+[node name="Worker" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
 input_pickable = true
 script = ExtResource( 2 )
 speed = 100.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 2 )
-animation = "gilet"
+frames = SubResource( 3 )
 script = ExtResource( 4 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2( -0.01, 0.749 )
-shape = SubResource( 3 )
-
-[node name="GatherTimer" type="Timer" parent="."]
-script = ExtResource( 1 )
+shape = SubResource( 4 )
 
 [node name="GatherLabel" type="Label" parent="."]
 visible = false
 margin_left = -24.0
-margin_top = -54.0
+margin_top = -44.0
 margin_right = 25.0
-margin_bottom = -40.0
+margin_bottom = -30.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "+5 food"
 align = 1
@@ -109,17 +108,40 @@ __meta__ = {
 }
 
 [node name="Animation" type="AnimationPlayer" parent="GatherLabel"]
-anims/Slidisappear = SubResource( 4 )
+anims/Slidisappear = SubResource( 5 )
+
+[node name="GatherTimer" type="Timer" parent="GatherLabel"]
+script = ExtResource( 1 )
 
 [node name="FoodDetectionArea" type="Area2D" parent="."]
 input_pickable = false
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FoodDetectionArea"]
-shape = SubResource( 5 )
+position = Vector2( -0.771458, -0.503342 )
+shape = SubResource( 6 )
+
+[node name="MoraleBar" type="TextureProgress" parent="."]
+margin_left = -17.4319
+margin_top = -25.2137
+margin_right = 40.5681
+margin_bottom = -19.2137
+rect_scale = Vector2( 0.6, 0.6 )
+value = 50.0
+texture_under = ExtResource( 9 )
+texture_progress = ExtResource( 10 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IdleMoraleTimer" type="Timer" parent="MoraleBar"]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
-[connection signal="gather_ticked" from="GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
-[connection signal="timeout" from="GatherTimer" to="GatherTimer" method="_on_CollectTimer_timeout"]
+[connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
+[connection signal="stopped_gathering" from="GatherLabel/GatherTimer" to="." method="_on_GatherTimer_stopped_gathering"]
+[connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
 [connection signal="area_entered" from="FoodDetectionArea" to="FoodDetectionArea" method="_on_FoodDetectionArea_area_entered"]
 [connection signal="body_entered" from="FoodDetectionArea" to="FoodDetectionArea" method="_on_FoodDetectionArea_body_entered"]
 [connection signal="resource_detected" from="FoodDetectionArea" to="." method="_on_FoodDetectionArea_resource_detected"]
+[connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]

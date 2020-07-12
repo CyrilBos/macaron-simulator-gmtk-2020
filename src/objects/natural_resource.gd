@@ -5,7 +5,6 @@ var _cur_amount
 
 func reduce_amount(harvest_speed):
 	_cur_amount -= harvest_speed
-	print(_cur_amount)
 	if (_cur_amount < 0):
 		_cur_amount = 0
 

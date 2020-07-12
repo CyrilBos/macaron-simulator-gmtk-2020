@@ -16,7 +16,7 @@ func get_entity_type():
 func get_gathered(harvest_speed):
 		resource.reduce_amount(harvest_speed)
 		if resource.is_gathered():
-			print("harvested")
+			print("%s was harvested" % self)
 			emit_signal("harvested")
 			queue_free()
 

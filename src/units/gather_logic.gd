@@ -7,6 +7,8 @@ var harvesting = false
 var to_harvest = null
 
 signal gather_ticked
+signal stopped_gathering
+
 
 func start_gathering(resource):
 	to_harvest = resource
@@ -19,7 +21,8 @@ func stop_gathering():
 	to_harvest = null
 	harvesting = false
 	self.stop()
-
+	emit_signal("stopped_gathering")
+	
 
 func _gather():
 	if to_harvest == null:
