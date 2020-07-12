@@ -58,7 +58,7 @@ func _on_Worker_state_changed(new_state):
 			
 	_current_worker_state = new_state
 	
-	if new_state == worker.State.IDLE:
+	if new_state == worker.State.IDLE && not worker.is_gilet():
 		_start_idle_morale_gain()
 	elif new_state == worker.State.GATHERING:
 		_start_working_morale_loss()

@@ -8,9 +8,8 @@ func _on_GiletArea_body_entered(body):
 		worker.seek(body)
 
 
-func _on_Worker_state_changed(new_state):
-	if new_state == worker.State.GILET:
+func _on_Worker_gilet_changed(is_gilet):
+	if is_gilet:
 		$CollisionShape2D.set_deferred("disabled", false)
-		
 	else:
 		$CollisionShape2D.set_deferred("disabled", true)

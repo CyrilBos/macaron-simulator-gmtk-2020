@@ -1,27 +1,42 @@
 extends KinematicBody2D
 
-export var animation = "default"
+enum State { IDLE, MOVING, GATHERING, FIGHTING } # TODO: Finite State Machine?
+
+# export var animation = "default"
+export var initial_state = State.IDLE
+export var initial_morale = 50
+
 export var speed = 20.0
 export var targetting_range = 64.0
+export var fighting_range = 128.0
 export var movement_delta = 10
 
 onready var morale_bar = $MoraleBar
 onready var gather_logic = $GatherLabel/GatherTimer
+onready var fight_logic = $HealthBar
 
-enum State { MOVING, GATHERING, IDLE, GILET } # TODO: Finite State Machine?
 var _current_state = State.IDLE
 
+var _gilet setget ,is_gilet
+
 signal state_changed
+signal gilet_changed
+signal target_out_of_reach
 
 func GILET_JAUNE():
-	_switch_state(State.GILET)
+	_gilet = true
 	$AnimatedSprite.play("gilet")
+	emit_signal("gilet_changed", true)
 
 
 func _ready():
-	$AnimatedSprite.play(animation)
-	_switch_state(State.IDLE)
-
+	# $AnimatedSprite.play(animation)
+	_switch_state(initial_state)
+	morale_bar.set_value(initial_morale)
+	if initial_morale <= 0:
+		GILET_JAUNE()
+		
+	gather_logic.set_salad_detector($SaladDetector)
 
 
 var selected = false
@@ -29,16 +44,18 @@ var selected = false
 var _movement_target = null
 var _target_node = null
 
+func is_moving():
+	return _current_state == State.MOVING;
+
 func get_entity_type():
 	return Entity.Types.UNIT
 
+func is_gilet():
+	return _gilet
 
-func is_idle():
-	return _current_state == State.IDLE
-	
+func lose_health(dmg):
+	fight_logic.lose_health(dmg)
 
-func is_working():
-	return _current_state == State.GATHERING
 
 func get_morale():
 	return morale_bar.get_value()
@@ -47,10 +64,6 @@ func get_morale():
 func move_to(position):
 	_target_node = null
 	_movement_target = position
-	
-	if _current_state == State.GATHERING:
-		print("%s moving so stop harvesting" % self)
-		gather_logic.stop_gathering()
 	
 	_switch_state(State.MOVING)
 
@@ -66,6 +79,7 @@ func target(targeted):
 
 
 func seek(poor_dude):
+	print("gilet %s seeks %s" % [self, poor_dude])
 	target(poor_dude)
 
 func _switch_state(new_state):
@@ -91,6 +105,13 @@ func _is_movement_target_reached():
 func _is_target_in_range():	
 	return _get_distance_to(_target_node.get_global_position()) < targetting_range
 
+func _gather():
+	gather_logic.start_gathering(_target_node)
+	_switch_state(State.GATHERING)
+
+func _fight():
+	fight_logic.fight(_target_node)
+	_switch_state(State.FIGHTING)
 
 func _process(_delta):
 	if _current_state == State.IDLE:
@@ -101,9 +122,13 @@ func _process(_delta):
 	elif _current_state == State.MOVING:
 		if _target_node != null:
 			if _is_target_in_range():
-				if _target_node != null and _target_node.get_entity_type() == Entity.Types.RESOURCE and _current_state != State.GATHERING:
-					gather_logic.start_gathering(_target_node)
-					_switch_state(State.GATHERING)
+				if _target_node.get_entity_type() == Entity.Types.RESOURCE:
+					_gather()
+				
+				elif _target_node.get_entity_type() == Entity.Types.UNIT:
+					_fight()
+			else:
+				emit_signal("target_out_of_reach")
 
 
 func _physics_process(_delta):
@@ -130,5 +155,5 @@ func _on_FoodDetectionArea_resource_detected(resource):
 		target(resource) #TODO: BUG NO RETARGET NEW FOOD WHEN DONE HARVESTING
 
 
-func _on_GatherTimer_stopped_gathering():
-	_switch_state(State.IDLE)
+func _on_HealthBar_death():
+	queue_free()

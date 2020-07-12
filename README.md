@@ -8,10 +8,10 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 # Ideas
 
 ## TODO list
-1. transfo gilet morale à 0
-2. gain morale while fighting
-3. retransfo worker at 50 morale? (100?)
-4. resources respawn
+1. fighting when gilet state
+2. fix auto-work with salad detection
+3. gain morale while fighting
+4. retransfo worker at 50 morale? (100?)
 5. JUICE or idle AI to be continued OR combat mechanic
 
 6. morale out-of-control
