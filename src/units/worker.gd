@@ -51,6 +51,9 @@ var _target_node = null
 
 func reset_state():
 	_switch_state(State.IDLE)
+	
+	if is_gilet():
+		seek(seek_detector.next_enemy())
 
 func _on_new_unit_selected(selected_unit):
 	if self != selected_unit:
@@ -172,11 +175,6 @@ func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
 		_sprite.draw_selection()
 
 
-func _on_FoodDetectionArea_resource_detected(resource):
-	if _current_state == State.IDLE and not is_gilet():
-		target(resource)
-
-
 func _on_DeathSound_finished():
 	_switch_state(State.IDLE)
 
@@ -186,7 +184,7 @@ func _on_HealthBar_death():
 
 
 func _on_HealthBar_killed():
-	_switch_state(State.IDLE)
+	reset_state()
 
 
 func _on_GatherTimer_stopped_gathering():
@@ -197,3 +195,8 @@ func _on_GiletArea_new_enemy(enemy):
 	if is_gilet():
 		if _target_node == null:
 			seek(enemy)
+
+
+func _on_SaladDetector_resource_detected(salad):
+	if _current_state != State.GATHERING and not is_gilet():
+		target(salad)

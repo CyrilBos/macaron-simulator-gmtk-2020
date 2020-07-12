@@ -1,6 +1,6 @@
 extends TextureProgress
 
-export var idle_morale_gain = 5;
+export var idle_morale_gain = 2;
 export var idle_morale_gain_freq = 1.5;
 
 export var working_morale_loss = 5;

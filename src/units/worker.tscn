@@ -78,14 +78,15 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CircleShape2D" id=6]
-radius = 95.7022
+[sub_resource type="CircleShape2D" id=8]
+radius = 114.672
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 229.547
 
 [node name="Worker" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
+z_index = -1
 input_pickable = true
 script = ExtResource( 2 )
 speed = 100.0
@@ -120,19 +121,18 @@ anims/Slidisappear = SubResource( 5 )
 script = ExtResource( 1 )
 
 [node name="SaladDetector" type="Area2D" parent="."]
-input_pickable = false
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SaladDetector"]
-position = Vector2( -0.771458, -0.503342 )
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 
 [node name="GiletArea" type="Area2D" parent="."]
 input_pickable = false
+monitorable = false
 script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GiletArea"]
-position = Vector2( -0.890869, 0 )
+position = Vector2( -0.890869, -0.667419 )
 shape = SubResource( 7 )
 disabled = true
 
@@ -179,9 +179,9 @@ stream = ExtResource( 13 )
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
-[connection signal="body_entered" from="SaladDetector" to="SaladDetector" method="_on_FoodDetectionArea_body_entered"]
-[connection signal="body_exited" from="SaladDetector" to="SaladDetector" method="_on_FoodDetectionArea_body_exited"]
-[connection signal="resource_detected" from="SaladDetector" to="." method="_on_FoodDetectionArea_resource_detected"]
+[connection signal="body_entered" from="SaladDetector" to="SaladDetector" method="_on_SaladDetector_body_entered"]
+[connection signal="body_exited" from="SaladDetector" to="SaladDetector" method="_on_SaladDetector_body_exited"]
+[connection signal="resource_detected" from="SaladDetector" to="." method="_on_SaladDetector_resource_detected"]
 [connection signal="body_entered" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_entered"]
 [connection signal="body_exited" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_exited"]
 [connection signal="new_enemy" from="GiletArea" to="." method="_on_GiletArea_new_enemy"]

@@ -2,6 +2,7 @@ extends Node
 
 signal food_updated
 signal unit_selected
+signal help_key
 
 var selecting_unit = false
 var selected_unit = null
@@ -41,3 +42,6 @@ func _input(event):
 		if selected_unit != null:
 			print("ordered %s to move to %s" % [selected_unit,event.global_position])
 			selected_unit.move_to(event.global_position)
+	elif event is InputEventKey and event.pressed:
+		if event.scancode == KEY_H:
+			emit_signal("help_key")

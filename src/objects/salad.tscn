@@ -4,7 +4,7 @@
 [ext_resource path="res://src/objects/salad.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 11.1049
+radius = 15.933
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -20,6 +20,7 @@ animations = [ {
 
 [node name="StaticBody" type="StaticBody2D"]
 scale = Vector2( 1.98989, 1.98207 )
+z_index = -1
 input_pickable = true
 script = ExtResource( 2 )
 
