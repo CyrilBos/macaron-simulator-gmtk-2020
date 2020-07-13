@@ -36,7 +36,7 @@ __meta__ = {
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -553.0
+margin_top = -677.0
 mouse_filter = 2
 custom_constants/margin_right = 16
 custom_constants/margin_top = 16
@@ -50,12 +50,12 @@ __meta__ = {
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 1264.0
-margin_bottom = 537.0
+margin_bottom = 661.0
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="GUI/MarginContainer/HSplitContainer"]
 margin_right = 1248.0
-margin_bottom = 521.0
+margin_bottom = 645.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
 text = "         PRESS H TO TOGGLE THIS HELP
@@ -63,9 +63,13 @@ text = "         PRESS H TO TOGGLE THIS HELP
 
 
 - left click to select a unit. Their stupid AI will take over if not selected.
+
 - when selected, right click to move or target a salad to harvest.
+
 - at 40 food collected, a new worker will be spawned.
+
 - Beware of a possible uprising... What is that orange bar? ;)
+
 - ...
 - Profit?"
 autowrap = true
