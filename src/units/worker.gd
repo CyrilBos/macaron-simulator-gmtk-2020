@@ -60,10 +60,7 @@ func reset_state():
 		seek(seek_detector.next_enemy())
 
 func _on_new_unit_selected(selected_unit):
-	if self != selected_unit:
-		_switch_state(State.IDLE)
-		
-	if is_gilet():
+	if self != selected_unit and is_gilet():
 		seek(seek_detector.next_enemy())
 
 

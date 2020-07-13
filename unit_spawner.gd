@@ -21,6 +21,12 @@ func _reduce_unit_count():
 	_unit_count -= 1
 	emit_signal("unit_count_updated", _unit_count)
 
+
+func register_new_unit(worker):
+	_unit_count += 1
+	worker.connect("death", self, "_reduce_unit_count")
+
+
 func _spawn_unit_if_threshold_reached(total_food):
 	
 	if total_food >= food_threshold_spawn:
@@ -30,8 +36,7 @@ func _spawn_unit_if_threshold_reached(total_food):
 		var rnd_pos = Vector2(rand_range(0, viewport.size.x), rand_range(0, viewport.size.y))
 		new_worker.global_translate(rnd_pos)
 		
-		new_worker.connect("death", self, "_reduce_unit_count")
-		
 		GameManager.add_child(new_worker)
 		
-		_unit_count += 1
+		register_new_unit(new_worker)
+		

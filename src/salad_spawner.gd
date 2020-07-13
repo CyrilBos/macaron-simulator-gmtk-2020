@@ -12,7 +12,9 @@ func _ready():
 func _spawn_salads():
 	var viewport = get_viewport()
 		
-	for n in range(UnitSpawner.get_unit_count()):
+	var new_salad_count = UnitSpawner.get_unit_count() / 2
+	print("spawning %s new salads" % unit_count)
+	for n in range(unit_count):
 		var rnd_pos = Vector2(rand_range(50, viewport.size.x - 50), rand_range(50, viewport.size.y - 50))
 	
 		var new_salad = SALAD.instance()
