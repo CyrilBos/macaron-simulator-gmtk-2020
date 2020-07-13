@@ -3,6 +3,8 @@ https://itch.io/jam/gmtk-deadline-missers-jam/rate/700439
 
 https://frovik.itch.io/mokron-simulator
 
+90% livecoded at https:twitch.tv/vikfro
+
 I will probably abandon this idea and focus on doing Olegna in Godot, with a multiplayer twin-stick top-down A-RPG gameplay!
 
 Simple sandbox "RTS" where your units have morale and hidden mechanics that impact it, which you have to figure out :)
