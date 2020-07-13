@@ -9,7 +9,7 @@ export var initial_morale = 50
 export var speed = 20.0
 export var targetting_range = 64.0
 export var fighting_range = 128.0
-export var movement_delta = 10
+export var movement_delta = 16
 
 signal state_changed
 signal gilet_changed
@@ -23,6 +23,7 @@ onready var morale_bar = $MoraleBar
 onready var gather_logic = $GatherLabel/GatherTimer
 onready var fight_logic = $HealthBar
 onready var seek_detector = $GiletArea
+onready var salad_detector = $SaladDetector
 
 var _current_state = State.IDLE
 
@@ -58,6 +59,8 @@ func reset_state():
 	
 	if is_gilet():
 		seek(seek_detector.next_enemy())
+	else:
+		target(salad_detector.next_salad())
 
 func _on_new_unit_selected(selected_unit):
 	if self != selected_unit and is_gilet():
@@ -98,7 +101,6 @@ func target(targeted):
 	_target_node = targeted
 	_movement_target = targeted.get_global_position()
 	_switch_state(State.MOVING)
-	print("worker %s targets " % self.to_string() + _target_node.to_string())	
 
 
 func seek(poor_dude):
@@ -146,7 +148,7 @@ func _fight():
 func _process(_delta):
 	if _current_state == State.IDLE:
 		var global_pos = self.get_global_position()
-		var random_vector = Vector2(rand_range(-100, 100), rand_range(-100, 100))
+		var random_vector = Vector2(rand_range(-150, 150), rand_range(-150, 150))
 		move_to(global_pos + random_vector)
 		return
 		
@@ -162,7 +164,7 @@ func _process(_delta):
 			emit_signal("target_out_of_reach")
 
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if _movement_target == null or _current_state != State.MOVING:
 		return
 	
@@ -171,7 +173,10 @@ func _physics_process(_delta):
 	
 	# TODO: calculate target sprite width or handle collision in bush to stop movement?
 	if not _is_movement_target_reached(): 
-		var _toto = move_and_slide(_get_distance_vec_to(_movement_target).normalized() * speed)
+		var collision = move_and_collide(_get_distance_vec_to(_movement_target).normalized() * speed * delta)
+		if collision:
+			# retarget
+			reset_state()
 	else: # reached target
 		_movement_target = null
 		_switch_state(State.IDLE)
@@ -179,7 +184,6 @@ func _physics_process(_delta):
 
 func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
 	if not selected and Input.is_mouse_button_pressed(BUTTON_LEFT):
-		print("collector selected " + self.to_string())
 		GameManager.select_unit(self)
 		_sprite.draw_selection()
 

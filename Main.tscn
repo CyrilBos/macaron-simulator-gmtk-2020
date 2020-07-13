@@ -4,7 +4,7 @@
 [ext_resource path="res://src/objects/salad.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/food_counter.gd" type="Script" id=3]
 [ext_resource path="res://src/game_manager.gd" type="Script" id=4]
-[ext_resource path="res://res/sprites/jean-didier.png" type="Texture" id=5]
+[ext_resource path="res://res/sprites/ui/jean-didier.png" type="Texture" id=5]
 [ext_resource path="res://res/fonts/PressStart2P-Regular.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://src/ui/profile_picture.gd" type="Script" id=7]
 [ext_resource path="res://src/salad_spawner.gd" type="Script" id=8]
@@ -12,11 +12,11 @@
 [ext_resource path="res://help_toggle.gd" type="Script" id=10]
 [ext_resource path="res://unit_count_label.gd" type="Script" id=11]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 28
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 48
 font_data = ExtResource( 6 )
 
@@ -56,7 +56,7 @@ mouse_filter = 2
 margin_right = 1248.0
 margin_bottom = 521.0
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "         PRESS H TO TOGGLE THIS HELP
 
 
@@ -115,7 +115,7 @@ margin_top = 434.0
 margin_right = 269.0
 margin_bottom = 623.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Il a le moral dans les chaussettes. MACARON DÉMISSION!"
 align = 2
 autowrap = true
@@ -131,7 +131,7 @@ position = Vector2( 716.324, 482.129 )
 initial_morale = 0
 
 [node name="Worker3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 274.492, 120.387 )
+position = Vector2( 257.541, 120.387 )
 
 [node name="Salad" parent="." instance=ExtResource( 2 )]
 position = Vector2( 274.474, 227.585 )

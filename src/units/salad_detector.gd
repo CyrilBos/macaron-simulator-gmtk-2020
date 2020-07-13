@@ -6,11 +6,11 @@ signal resource_detected
 
 var salads = []
 
-func get_next_detected_salad():
+func next_salad():
 	if salads.size() == 0:
 		return null
 	
-	return salads[0]
+	return salads.pop_front()
 
 
 func contains(salad):

@@ -1,12 +1,12 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/units/gather_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
-[ext_resource path="res://res/sprites/worker.png" type="Texture" id=3]
+[ext_resource path="res://res/sprites/units/gilet_jaune-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://src/units/unit_selection.gd" type="Script" id=4]
 [ext_resource path="res://src/units/gather_label.gd" type="Script" id=5]
 [ext_resource path="res://src/units/salad_detector.gd" type="Script" id=6]
-[ext_resource path="res://res/sprites/gilet_jaune.png" type="Texture" id=7]
+[ext_resource path="res://res/sprites/units/worker-Sheet.png" type="Texture" id=7]
 [ext_resource path="res://src/units/morale.gd" type="Script" id=8]
 [ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
 [ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
@@ -16,32 +16,43 @@
 [ext_resource path="res://res/audio/sounds/antho jvais tniker salo.wav" type="AudioStream" id=14]
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 3 )
+flags = 4
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 7 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 1 ) ],
+"frames": [ SubResource( 1 ), SubResource( 1 ), SubResource( 2 ), SubResource( 2 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 2 ) ],
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "gilet",
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=6]
 radius = 10.8325
 height = 10.3671
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:custom_colors/font_color")
 tracks/0/interp = 1
@@ -79,10 +90,10 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=8]
 radius = 114.672
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=9]
 radius = 229.547
 
 [node name="Worker" type="KinematicBody2D"]
@@ -92,13 +103,17 @@ input_pickable = true
 script = ExtResource( 2 )
 speed = 100.0
 
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 3 )
+frames = SubResource( 5 )
+speed_scale = 0.75
+playing = true
 script = ExtResource( 4 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2( -0.01, 0.749 )
-shape = SubResource( 4 )
+shape = SubResource( 6 )
 
 [node name="GatherLabel" type="Label" parent="."]
 visible = false
@@ -116,7 +131,7 @@ __meta__ = {
 }
 
 [node name="Animation" type="AnimationPlayer" parent="GatherLabel"]
-anims/Slidisappear = SubResource( 5 )
+anims/Slidisappear = SubResource( 7 )
 
 [node name="GatherTimer" type="Timer" parent="GatherLabel"]
 script = ExtResource( 1 )
@@ -125,7 +140,7 @@ script = ExtResource( 1 )
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SaladDetector"]
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 
 [node name="GiletArea" type="Area2D" parent="."]
 input_pickable = false
@@ -133,8 +148,8 @@ monitorable = false
 script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GiletArea"]
-position = Vector2( -0.890869, -0.667419 )
-shape = SubResource( 7 )
+position = Vector2( -1.68457, -1.06427 )
+shape = SubResource( 9 )
 disabled = true
 
 [node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="GiletArea"]

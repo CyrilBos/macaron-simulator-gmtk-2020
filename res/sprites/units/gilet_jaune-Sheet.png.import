@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/gilet_jaune.png-a58fbb377913748bdd29c3293ea668b0.stex"
+path="res://.import/gilet_jaune-Sheet.png-ee89cc496f152308ff4839b9d55eb6b4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://res/sprites/gilet_jaune.png"
-dest_files=[ "res://.import/gilet_jaune.png-a58fbb377913748bdd29c3293ea668b0.stex" ]
+source_file="res://res/sprites/units/gilet_jaune-Sheet.png"
+dest_files=[ "res://.import/gilet_jaune-Sheet.png-ee89cc496f152308ff4839b9d55eb6b4.stex" ]
 
 [params]
 

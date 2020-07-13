@@ -27,6 +27,8 @@ func gather(resource):
 
 	
 func _stop_gathering():
+	if to_harvest != null:
+		to_harvest.disconnect("harvested", self, "_switch_salad_or_stop_gathering")
 	to_harvest = null
 	gathering = false
 	self.stop()
@@ -35,7 +37,7 @@ func _stop_gathering():
 func _switch_salad_or_stop_gathering():
 	self.stop()
 	
-	var next = salad_detector.get_next_detected_salad()
+	var next = salad_detector.next_salad()
 	if next == null:
 		_stop_gathering()
 		worker.reset_state()

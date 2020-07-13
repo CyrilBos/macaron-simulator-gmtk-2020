@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/jean-didier.png-fa2e865fb3dcd8e632bd133344d56d3b.stex"
+path="res://.import/jean-didier.png-55cd5164b364a564dd0844921de8fb5b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://res/sprites/jean-didier.png"
-dest_files=[ "res://.import/jean-didier.png-fa2e865fb3dcd8e632bd133344d56d3b.stex" ]
+source_file="res://res/sprites/ui/jean-didier.png"
+dest_files=[ "res://.import/jean-didier.png-55cd5164b364a564dd0844921de8fb5b.stex" ]
 
 [params]
 
