@@ -11,12 +11,12 @@
 [ext_resource path="res://unit_spawner.gd" type="Script" id=9]
 [ext_resource path="res://help_toggle.gd" type="Script" id=10]
 
-[sub_resource type="DynamicFont" id=1]
-size = 48
-font_data = ExtResource( 6 )
-
 [sub_resource type="DynamicFont" id=2]
 size = 28
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
 font_data = ExtResource( 6 )
 
 [node name="GameManager" type="Node"]
@@ -26,55 +26,6 @@ script = ExtResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HSplitContainer" type="Control" parent="GUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = 77.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FoodLabel" type="RichTextLabel" parent="GUI/HSplitContainer"]
-margin_left = 15.1191
-margin_top = 11.3393
-margin_right = 83.1191
-margin_bottom = 39.3393
-mouse_filter = 2
-text = "Food: 0"
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ProfilePicture" type="TextureRect" parent="GUI/HSplitContainer"]
-visible = false
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -103.843
-margin_top = 14.487
-margin_right = 163.157
-margin_bottom = 400.487
-rect_scale = Vector2( 0.33, 0.33 )
-mouse_filter = 2
-texture = ExtResource( 5 )
-script = ExtResource( 7 )
-
-[node name="MoraleLabel" type="Label" parent="GUI/HSplitContainer/ProfilePicture"]
-margin_left = -786.97
-margin_top = 433.795
-margin_right = 269.03
-margin_bottom = 497.795
-grow_horizontal = 0
-custom_fonts/font = SubResource( 1 )
-text = "Morale: il est content"
-align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -119,8 +70,66 @@ autowrap = true
 clip_text = true
 script = ExtResource( 10 )
 
+[node name="FoodLabel" type="RichTextLabel" parent="GUI"]
+margin_left = 15.0
+margin_top = 16.0
+margin_right = 83.0
+margin_bottom = 31.0
+mouse_filter = 2
+text = "Food: 0"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnitCountLabel" type="Label" parent="GUI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -94.5
+margin_top = 16.0
+margin_right = 94.5
+margin_bottom = 14.0
+text = "Units: 2 Farmers and 1 GILET!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProfilePicture" type="TextureRect" parent="GUI"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -103.843
+margin_top = 14.487
+margin_right = 163.157
+margin_bottom = 400.487
+rect_scale = Vector2( 0.33, 0.33 )
+mouse_filter = 2
+texture = ExtResource( 5 )
+script = ExtResource( 7 )
+
+[node name="MoraleLabel" type="Label" parent="GUI/ProfilePicture"]
+margin_left = -1261.0
+margin_top = 434.0
+margin_right = 269.0
+margin_bottom = 623.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 1 )
+text = "Il a le moral dans les chaussettes. MACARON DÉMISSION!"
+align = 2
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Worker" parent="." instance=ExtResource( 1 )]
-position = Vector2( 855.147, 207.152 )
+position = Vector2( 851.142, 204.482 )
+
+[node name="gilet" parent="." instance=ExtResource( 1 )]
+position = Vector2( 716.324, 482.129 )
+initial_morale = 0
+
+[node name="Worker3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 274.492, 120.387 )
 
 [node name="Salad" parent="." instance=ExtResource( 2 )]
 position = Vector2( 274.474, 227.585 )
@@ -130,13 +139,28 @@ start_amount = 15
 position = Vector2( 175.754, 274.982 )
 
 [node name="Salad3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 579.918, 297.902 )
+position = Vector2( 583.923, 228.49 )
+
+[node name="Salad6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 535.868, 534.169 )
+
+[node name="Salad7" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1020.41, 432.721 )
+
+[node name="Salad9" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1020.41, 432.721 )
+
+[node name="Salad8" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1087.16, 260.527 )
 
 [node name="Salad4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 432.646, 81.358 )
 
 [node name="Salad5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 476.984, 315.914 )
+position = Vector2( 315.469, 438.719 )
+
+[node name="Salad10" parent="." instance=ExtResource( 2 )]
+position = Vector2( 821.373, 298.561 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -147,5 +171,5 @@ script = ExtResource( 8 )
 
 [node name="UnitSpawner" type="Node" parent="."]
 script = ExtResource( 9 )
-[connection signal="unit_selected" from="." to="GUI/HSplitContainer/ProfilePicture" method="_on_GameManager_unit_selected"]
+[connection signal="unit_selected" from="." to="GUI/ProfilePicture" method="_on_GameManager_unit_selected"]
 [connection signal="timeout" from="SaladSpawner" to="SaladSpawner" method="_on_SaladSpawner_timeout"]

@@ -9,6 +9,7 @@ const gilet_string = "il a le moral dans les chaussettes. MOKRON DÉMISSION!"
 func _ready():
 	GameManager.connect("unit_selected", self, "display_picture")
 
+
 func display_picture(selected_unit):
 	self.set_visible(true)
 	var morale = selected_unit.get_morale()

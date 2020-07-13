@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/units/gather_logic.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/units/seek_and_destroy.gd" type="Script" id=11]
 [ext_resource path="res://src/units/fight_logic.gd" type="Script" id=12]
 [ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=13]
+[ext_resource path="res://res/audio/sounds/antho jvais tniker salo.wav" type="AudioStream" id=14]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -78,7 +79,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=6]
 radius = 114.672
 
 [sub_resource type="CircleShape2D" id=7]
@@ -124,7 +125,7 @@ script = ExtResource( 1 )
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SaladDetector"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="GiletArea" type="Area2D" parent="."]
 input_pickable = false
@@ -135,6 +136,9 @@ script = ExtResource( 11 )
 position = Vector2( -0.890869, -0.667419 )
 shape = SubResource( 7 )
 disabled = true
+
+[node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="GiletArea"]
+stream = ExtResource( 14 )
 
 [node name="MoraleBar" type="TextureProgress" parent="."]
 margin_left = -17.4319
@@ -176,8 +180,8 @@ stream = ExtResource( 13 )
 [connection signal="state_changed" from="." to="GatherLabel/GatherTimer" method="_on_Worker_state_changed"]
 [connection signal="target_out_of_reach" from="." to="HealthBar" method="_on_Worker_target_out_of_reach"]
 [connection signal="target_out_of_reach" from="." to="GatherLabel/GatherTimer" method="_on_Worker_target_out_of_reach"]
-[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
 [connection signal="body_entered" from="SaladDetector" to="SaladDetector" method="_on_SaladDetector_body_entered"]
 [connection signal="body_exited" from="SaladDetector" to="SaladDetector" method="_on_SaladDetector_body_exited"]

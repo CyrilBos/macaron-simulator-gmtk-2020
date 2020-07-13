@@ -1,3 +1,8 @@
+
+It was at this moment VikFro didn't know, he fucked up:
+
+```# TODO: Finite State Machine?```
+
 # Macron Simulator (GMTK 2020 "Out of Control" & Godot Wild Jam 23 "MiniWorld")
 Simple RTS where your units have a hidden morale and hidden mechanics that impact it, which you have to figure out :)
  

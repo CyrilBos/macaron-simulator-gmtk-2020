@@ -15,8 +15,10 @@ var profile_picture = preload("ui/profile_picture.gd")
 func get_total_food():
 	return _total_food
 
+
 func consume_food(cost):
 	_total_food -= cost
+	
 
 func select_unit(selected):
 	if selected_unit != null:

@@ -11,6 +11,13 @@ export var targetting_range = 64.0
 export var fighting_range = 128.0
 export var movement_delta = 10
 
+signal state_changed
+signal gilet_changed
+signal target_out_of_reach
+
+signal death
+
+
 onready var _sprite = $AnimatedSprite
 onready var morale_bar = $MoraleBar
 onready var gather_logic = $GatherLabel/GatherTimer
@@ -21,15 +28,10 @@ var _current_state = State.IDLE
 
 var _gilet setget ,is_gilet
 
-signal state_changed
-signal gilet_changed
-signal target_out_of_reach
+var selected = false
 
-func GILET_JAUNE():
-	_gilet = true
-	_sprite.play("gilet")
-	reset_state()
-	emit_signal("gilet_changed", true)
+var _movement_target = null
+var _target_node = null
 
 
 func _ready():
@@ -44,10 +46,12 @@ func _ready():
 	GameManager.connect("unit_selected", self, "_on_new_unit_selected")
 
 
-var selected = false
+func GILET_JAUNE():
+	_gilet = true
+	_sprite.play("gilet")
+	reset_state()
+	emit_signal("gilet_changed", true)
 
-var _movement_target = null
-var _target_node = null
 
 func reset_state():
 	_switch_state(State.IDLE)
@@ -62,14 +66,18 @@ func _on_new_unit_selected(selected_unit):
 	if is_gilet():
 		seek(seek_detector.next_enemy())
 
+
 func is_moving():
 	return _current_state == State.MOVING;
+
 
 func get_entity_type():
 	return Entity.Types.UNIT
 
+
 func is_gilet():
 	return _gilet
+
 
 func lose_health(dmg):
 	fight_logic.lose_health(dmg)
@@ -97,8 +105,12 @@ func target(targeted):
 
 
 func seek(poor_dude):
-	print("gilet %s seeks %s" % [self, poor_dude])
+	if poor_dude != _target_node:
+		print("gilet %s seeks %s" % [self, poor_dude])
+		$GiletArea/GiletSeekSound.play()
 	target(poor_dude)
+	
+	
 
 func _switch_state(new_state):
 	_current_state = new_state	
@@ -180,6 +192,7 @@ func _on_DeathSound_finished():
 
 
 func _on_HealthBar_death():
+	emit_signal("death")
 	queue_free()
 
 

@@ -14,11 +14,14 @@ func next_enemy():
 	
 
 func contains(target):
+	if enemies.size() == 0:
+		return false
+		
 	return enemies.bsearch(target) <= enemies.size()
 	
 	
 func _on_GiletArea_body_entered(body):
-	if body.get_entity_type() == Entity.Types.UNIT and body != worker:
+	if body.get_entity_type() == Entity.Types.UNIT and body != worker and not contains(body):
 		enemies.append(body)
 		print("new enemy %s" % body)
 		emit_signal("new_enemy", body)
