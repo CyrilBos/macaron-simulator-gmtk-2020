@@ -1,4 +1,4 @@
-# Macron Simulator (GMTK 2020 "Out of Control" & Godot Wild Jam 23 "MiniWorld")
+# Mac(a)ron Simulator (GMTK 2020 "Out of Control" & Godot Wild Jam 23 "MiniWorld")
 https://itch.io/jam/gmtk-deadline-missers-jam/rate/700439
 https://frovik.itch.io/mokron-simulator
 
