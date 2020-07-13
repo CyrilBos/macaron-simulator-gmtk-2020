@@ -1,42 +1,37 @@
 # Macron Simulator (GMTK 2020 "Out of Control" & Godot Wild Jam 23 "MiniWorld")
-Simple RTS where your units have a hidden morale and hidden mechanics that impact it, which you have to figure out :)
- 
-Below certain thresholds the behaviour of the unit changes and it can start picking fights with its allies or destroy buildings etc.
- 
-=> The player loses the control you usually have in a RTS game, and has to adapt to the new configuration
+https://itch.io/jam/gmtk-deadline-missers-jam/rate/700439
+https://frovik.itch.io/mokron-simulator
 
+I will probably abandon this idea and focus on doing Olegna in Godot, with a multiplayer twin-stick top-down A-RPG gameplay!
+
+Simple sandbox "RTS" where your units have morale and hidden mechanics that impact it, which you have to figure out :)
+
+I did not have time to implement a true game loop and a goal, so you can just toy around and see how bugged it is.
+ 
+When it reaches the behaviour of the unit changes and it will start picking fights with its allies. 
+
+You can select and babysit only one unit at a time, and when a unit is not selected, the wonky self-destructive AI takes control and wrecks havoc!
+ 
 # Ideas
 
 ## TODO list
-1. retransfo worker at 50 morale? (100?)
-2. gain morale while fighting
-3. flee AI when being beaten up / lose morale
-4. JUICE or idle AI to be continued OR combat mechanic
+1. Make a real game? Could reuse the Zombinvasion idea. Or:
+- JUICE!
+2. design the AI with a calmhead, rewrite it with a clean Finite State Machine or something similar. So it behaves less erratically
+3. gain morale while fighting
+- JUICE!
+4. remove gilet jaune when reaching 100 morale
+5. flee AI when being beaten up / lose morale
+- JUICE!- JUICE!- JUICE!- JUICE!- JUICE!
 
-4. morale out-of-control
-    - fighting reduces it,
-    - someone else harvesting food from the same bush as you reduces it
-
-- enemy?
-
-- NO multiple unit management! Because I don't have time and it's more "fun" to micromanage your baby units doing whatever they want
-
-## known bugs
-- food label goes under sprites
 
 ## Themed UI/UX, "juice" & random shit
 - animation Pokémon evolve-like between two sprites when transitioning to gilet
 
-- Unit profile picture with **Pixel Art Jeanne La Sale**
-
 - boire de la 86
 
-- skin content chemise hawaienne short tongs
+- happy skin chemise hawaienne short tongs
 
 - make units fatter by modifying X scale if they eat too much
 
-- The game can not be quit: There's a quit button but it trolls you
-
-
-Done:
-- YELLOW JACKET SKIN because LA GRÈVE on en a marre that the neighbour harvests the same bushes as us
+- Guillotine to quit the game
