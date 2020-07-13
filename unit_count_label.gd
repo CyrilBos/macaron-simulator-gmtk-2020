@@ -1,9 +1,9 @@
 extends Label
 
 
-func _ready():
-	UnitSpawner.connect("unit_count_updated", self, "_update_unit_counter")
-	
-	
 func _update_unit_counter(worker_count, gilet_count):
-	self.set_text("%d worker_count %d gilet_count" % [worker_count, gilet_count])
+	self.set_text("Farmers: %d GILETS: %d" % [worker_count, gilet_count])
+
+
+func _on_UnitSpawner_units_counts_updated(workers, gilets):
+	_update_unit_counter(workers, gilets)

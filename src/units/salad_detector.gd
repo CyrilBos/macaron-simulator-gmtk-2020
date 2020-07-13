@@ -27,7 +27,6 @@ func _is_body_salad(body):
 func _on_SaladDetector_body_entered(body):
 	if body != worker and _is_body_salad(body) and not contains(body):
 		salads.append(body)
-		print("%s found new salad %s" % [self, body])
 		emit_signal("resource_detected", body)
 
 

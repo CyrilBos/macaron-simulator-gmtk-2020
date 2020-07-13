@@ -96,6 +96,7 @@ func move_to(position):
 
 func target(targeted):
 	if targeted == self || targeted == null:
+		print("ouiiii c'est la passion du développemeeeent!")
 		return
 		
 	_target_node = targeted
@@ -104,6 +105,10 @@ func target(targeted):
 
 
 func seek(poor_dude):
+	if poor_dude == null:
+		print("not a poor dude bro")
+		return
+	
 	if poor_dude != _target_node:
 		print("gilet %s seeks %s" % [self, poor_dude])
 		$GiletArea/GiletSeekSound.play()
@@ -199,10 +204,6 @@ func _on_HealthBar_death():
 
 func _on_HealthBar_killed():
 	reset_state()
-
-
-func _on_GatherTimer_stopped_gathering():
-	_switch_state(State.IDLE)
 
 
 func _on_GiletArea_new_enemy(enemy):

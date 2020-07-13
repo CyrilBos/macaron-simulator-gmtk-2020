@@ -6,6 +6,7 @@ var enemies = []
 
 signal new_enemy
 
+
 func next_enemy():
 	if enemies.size() == 0:
 		return null
@@ -23,7 +24,6 @@ func contains(target):
 func _on_GiletArea_body_entered(body):
 	if body.get_entity_type() == Entity.Types.UNIT and body != worker and not contains(body):
 		enemies.append(body)
-		print("new enemy %s" % body)
 		emit_signal("new_enemy", body)
 
 
@@ -37,5 +37,5 @@ func _on_Worker_gilet_changed(is_gilet):
 func _on_GiletArea_body_exited(body):
 	if body.get_entity_type() == Entity.Types.UNIT:
 		var idx = enemies.bsearch(body)
-		if idx <= enemies.size():
+		if idx < enemies.size():
 			enemies.remove(idx)

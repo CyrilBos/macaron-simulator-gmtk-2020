@@ -107,6 +107,7 @@ speed = 100.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
+frame = 3
 speed_scale = 0.75
 playing = true
 script = ExtResource( 4 )
@@ -154,6 +155,7 @@ disabled = true
 
 [node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="GiletArea"]
 stream = ExtResource( 14 )
+bus = "Sounds"
 
 [node name="MoraleBar" type="TextureProgress" parent="."]
 margin_left = -17.4319
@@ -189,14 +191,16 @@ __meta__ = {
 
 [node name="KillSound" type="AudioStreamPlayer2D" parent="HealthBar"]
 stream = ExtResource( 13 )
+volume_db = 11.794
+bus = "Sounds"
 [connection signal="gilet_changed" from="." to="GiletArea" method="_on_Worker_gilet_changed"]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
-[connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
 [connection signal="state_changed" from="." to="GatherLabel/GatherTimer" method="_on_Worker_state_changed"]
-[connection signal="target_out_of_reach" from="." to="HealthBar" method="_on_Worker_target_out_of_reach"]
+[connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
 [connection signal="target_out_of_reach" from="." to="GatherLabel/GatherTimer" method="_on_Worker_target_out_of_reach"]
-[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
+[connection signal="target_out_of_reach" from="." to="HealthBar" method="_on_Worker_target_out_of_reach"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
 [connection signal="body_entered" from="SaladDetector" to="SaladDetector" method="_on_SaladDetector_body_entered"]
 [connection signal="body_exited" from="SaladDetector" to="SaladDetector" method="_on_SaladDetector_body_exited"]

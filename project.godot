@@ -28,7 +28,6 @@ config/icon="res://icon.png"
 
 GameManager="*res://src/game_manager.gd"
 Entity="*res://src/entity.gd"
-UnitSpawner="*res://unit_spawner.gd"
 
 [display]
 

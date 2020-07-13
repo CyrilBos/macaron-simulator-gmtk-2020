@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/flaMEnTALco.ogg-a7a5770a5c24b50568d44e23e71f4ce5.oggstr"
+
+[deps]
+
+source_file="res://res/audio/flaMEnTALco.ogg"
+dest_files=[ "res://.import/flaMEnTALco.ogg-a7a5770a5c24b50568d44e23e71f4ce5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

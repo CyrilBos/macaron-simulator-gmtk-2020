@@ -28,6 +28,7 @@ func gather(resource):
 	
 func _stop_gathering():
 	if to_harvest != null:
+		to_harvest.reset_animation()
 		to_harvest.disconnect("harvested", self, "_switch_salad_or_stop_gathering")
 	to_harvest = null
 	gathering = false
