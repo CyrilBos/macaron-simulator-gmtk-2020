@@ -5,7 +5,7 @@ var _gilet_count = 1 setget, get_gilet_count
 
 signal units_counts_updated
 
-const WORKER = preload("res://src/units/worker.tscn")
+const WORKER = preload("res://src/units/worker/worker.tscn")
 const food_threshold_spawn = 40
 
 onready var viewport = get_viewport()

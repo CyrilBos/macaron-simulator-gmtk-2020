@@ -36,7 +36,7 @@ func _get_direction():
 		return null
 	
 	if path.size() == 0:
-		print("Path from %s at %s to %s was empty", self, self.get_global_position(), last_target)
+		print("Path from %s at %s to %s was empty" %  [self, self.get_global_position(), last_target])
 		return Vector2.ZERO
 	
 	var cur_pos = self.get_global_position()
