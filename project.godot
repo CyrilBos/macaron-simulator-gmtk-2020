@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Object",
+"class": "Navigator",
+"language": "GDScript",
+"path": "res://src/units/worker/states/navigating.gd"
+}, {
 "base": "Reference",
 "class": "RangeAttribute",
 "language": "GDScript",
 "path": "res://src/range_attribute.gd"
 } ]
 _global_script_class_icons={
+"Navigator": "",
 "RangeAttribute": ""
 }
 
@@ -28,6 +34,7 @@ config/icon="res://icon.png"
 
 GameManager="*res://src/game_manager.gd"
 Entity="*res://src/entity.gd"
+NavigationManager="*res://src/navigation_manager.gd"
 
 [display]
 

@@ -17,17 +17,16 @@ export var movement_delta = 16
 
 signal state_changed
 signal gilet_changed
-signal target_out_of_reach
 
 signal death
 
 onready var _sprite = $AnimatedSprite
-onready var _navigator = $Navigation2D
 onready var morale_bar = $MoraleBar
 onready var gatherer = $GatherLabel/GatherTimer
 onready var fight_logic = $HealthBar
 onready var seek_detector = $GiletArea
 onready var resource_detector = $ResourceDetector
+onready var _seek_enemy_sound = $GiletArea/GiletSeekSound
 
 var _current_state = States.IDLE
 
@@ -43,7 +42,7 @@ func reset_state():
 	if is_gilet():
 		seek(seek_detector.next_enemy())
 	else:
-		target(resource_detector.next_salad())
+		target(resource_detector.next_resource())
 
 
 func _on_new_unit_selected(selected_unit):
@@ -67,10 +66,11 @@ func get_morale():
 	return morale_bar.get_value()
 
 
-func move_to(position):
+func move_to(pos):
+	_movement_target == pos
 	_switch_state_to(States.MOVING)
 	
-
+# TODO: same as as seek? or seek only for moving targets? And then working should use move_to?
 func target(targeted):
 	_target_node = targeted
 	_switch_state_to(States.SEEKING)
@@ -83,41 +83,41 @@ func seek(enemy):
 	
 	if enemy != _target_node:
 		print("gilet %s seeks %s" % [self, enemy])
-		$GiletArea/GiletSeekSound.play()
+		_seek_enemy_sound.play()
 	target(enemy)
 
 
 var _movement_target = null
 var _target_node = null
-
+var _nav_handler = Navigator.new()
 
 func _ready():
 	_switch_state_to(initial_state)
 	morale_bar.set_value(initial_morale)
 	
 	if initial_morale <= 0:
-		_GILET_JAUNE()
+		GILET_JAUNE()
 	
 	# TODO: clean up children dependencies "injection" like this
 	gatherer.set_resource_detector(resource_detector)
 	
-	GameManager.connect("unit_selected", self, "_on_new_unit_selected")
+	var err = GameManager.connect("unit_selected", self, "_on_new_unit_selected")
+	if err:
+		print(err)
 
 
 func _process(_delta):
 	if _current_state == States.IDLE:
 		_wander()
 		return
-	
+	# TODO: see above for seek()
 	if _current_state == States.SEEKING:
-		if _navigator._is_target_node_reachable(_target_node):
-			_compute_new_state()
-			
-		if _target_node.get_entity_type() == Entity.Types.RESOURCE:
-				_gather()
-			
-		elif _target_node.get_entity_type() == Entity.Types.UNIT:
-				_fight()
+		if _nav_handler.target_is_in_range(self.get_global_position(), _target_node.get_global_position(), _get_target_range()):
+			if _target_node.get_entity_type() == Entity.Types.RESOURCE:
+					_gather()
+				
+			elif _target_node.get_entity_type() == Entity.Types.UNIT:
+					_fight()
 
 
 func _wander():
@@ -130,7 +130,7 @@ func _wander():
 
 func _gather():
 	gatherer.gather(_target_node)
-	_switch_state_to(States.GATHERING)
+	_switch_state_to(States.WORKING)
 
 
 func _fight():
@@ -138,47 +138,35 @@ func _fight():
 	_switch_state_to(States.FIGHTING)
 	
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not _current_state in NAVIGATING_STATES:
 		return
 		
 	var target_pos = _movement_target if _current_state == States.MOVING else _target_node.get_global_position()
 	
-	var direction = _navigator.follow(target_pos, _get_target_range())
-		
-	if direction == Vector2.ZERO:
+	if target_pos == null:
+		print("[BUG] target_pos was null for %s with state %s" % [self, _current_state])
+		return
+	
+	var direction = _nav_handler.follow(self.get_global_position(), target_pos, _get_target_range())
+	
+	if direction == null:
 		_compute_new_state()
+		return
 	
 	var collision = _take_a_step_towards(direction)
 
 	if collision:
 		# will recalculate path
-		_navigator.follow(target_pos, _get_target_range(), true)
+		_nav_handler.follow(self.get_global_position(), target_pos, _get_target_range(), true)
+
 
 func _get_target_range():
 	return movement_delta if _current_state == States.MOVING else targetting_range
 
+
 func _compute_new_state():
-	_compute_new_state_from_movement() if _current_state in NAVIGATING_STATES else _compute_new_state_from_activity()
-
-
-func _compute_new_state_from_movement():
-	if _current_state == States.SEEKING:
-		_fight()
-	elif _current_state == States.MOVING:
-		_wander()
-
-
-func _compute_new_state_from_activity():
-	if _current_state == States.FIGHTING:
-		_wander()
-
-
-func _GILET_JAUNE():
-	_gilet = true
-	_sprite.play("gilet")
-	reset_state()
-	emit_signal("gilet_changed", true)
+	_wander()
 
 	
 func _switch_state_to(new_state):
@@ -187,7 +175,14 @@ func _switch_state_to(new_state):
 	
 
 func _take_a_step_towards(direction):
-	move_and_slide(position * speed)
+	return move_and_slide(direction * speed)
+
+
+func GILET_JAUNE():
+	_gilet = true
+	_sprite.play("gilet")
+	reset_state()
+	emit_signal("gilet_changed", true)
 
 
 func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
@@ -215,6 +210,7 @@ func _on_GiletArea_new_enemy(enemy):
 			seek(enemy)
 
 
-func _on_SaladDetector_resource_detected(salad):
-	if _current_state != States.WORKING and not is_gilet():
-		target(salad)
+func _on_ResourceDetector_resource_detected(resource):
+	if _current_state != States.SEEKING and _current_state != States.WORKING and not is_gilet():
+		target(resource)
+

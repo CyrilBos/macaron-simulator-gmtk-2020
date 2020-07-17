@@ -4,36 +4,30 @@ onready var worker = get_parent()
 
 signal resource_detected
 
-var salads = []
+var resources = []
 
-func next_salad():
-	if salads.size() == 0:
+func next_resource():
+	if resources.size() == 0:
 		return null
 	
-	return salads.pop_front()
+	return resources.pop_front()
 
 
-func contains(salad):
-	if salads.size() == 0:
-		return false
-	
-	return salads.bsearch(salad) <= salads.size()
-
-
-func _is_body_salad(body):
+func _is_body_a_resource(body):
 	return body.get_entity_type() == Entity.Types.RESOURCE
 
 
+# TODO: sort by distance?
 func _on_ResourceDetector_body_entered(body):
-	if body != worker and _is_body_salad(body) and not contains(body):
-		salads.append(body)
+	if body != worker and _is_body_a_resource(body) and not body in resources:
+		resources.append(body)
 		emit_signal("resource_detected", body)
 
 
 func _on_ResourceDetector_body_exited(body):
-	if _is_body_salad(body):
-		var salad_idx = salads.bsearch(body)
-		if salad_idx >= salads.size():
+	if _is_body_a_resource(body):
+		var resource_idx = resources.bsearch(body)
+		if resource_idx >= resources.size():
 			return
 		else:
-			salads.remove(salad_idx)
+			resources.remove(resource_idx)

@@ -24,5 +24,5 @@ func _spawn_salads():
 		get_parent().add_child(new_salad)
 
 
-func _on_SaladSpawner_timeout():
+func _on_ResourceSpawner_timeout():
 	_spawn_salads()

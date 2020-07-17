@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/units/worker/worker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/objects/salad.tscn" type="PackedScene" id=2]
@@ -7,11 +7,12 @@
 [ext_resource path="res://res/sprites/ui/jean-didier.png" type="Texture" id=5]
 [ext_resource path="res://res/fonts/PressStart2P-Regular.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://src/ui/profile_picture.gd" type="Script" id=7]
-[ext_resource path="res://src/salad_spawner.gd" type="Script" id=8]
-[ext_resource path="res://unit_spawner.gd" type="Script" id=9]
-[ext_resource path="res://help_toggle.gd" type="Script" id=10]
+[ext_resource path="res://src/resource_spawner.gd" type="Script" id=8]
+[ext_resource path="res://src/unit_spawner.gd" type="Script" id=9]
+[ext_resource path="res://src/ui/help_toggle.gd" type="Script" id=10]
+[ext_resource path="res://src/navigation_manager.gd" type="Script" id=11]
 [ext_resource path="res://res/audio/flaMEnTALco.ogg" type="AudioStream" id=12]
-[ext_resource path="res://sound_toggle.gd" type="Script" id=13]
+[ext_resource path="res://src/ui/sound_toggle.gd" type="Script" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 28
@@ -150,10 +151,6 @@ __meta__ = {
 [node name="Worker" parent="." instance=ExtResource( 1 )]
 position = Vector2( 851.142, 204.482 )
 
-[node name="gilet" parent="." instance=ExtResource( 1 )]
-position = Vector2( 716.324, 482.129 )
-initial_morale = 0
-
 [node name="Worker3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 257.541, 120.387 )
 
@@ -193,7 +190,7 @@ position = Vector2( 821.373, 298.561 )
 anchor_mode = 0
 current = true
 
-[node name="SaladSpawner" type="Timer" parent="."]
+[node name="ResourceSpawner" type="Timer" parent="."]
 script = ExtResource( 8 )
 
 [node name="UnitSpawner" type="Node" parent="."]
@@ -202,6 +199,9 @@ script = ExtResource( 9 )
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -12.0
+
+[node name="NavigationManager" type="Navigation2D" parent="."]
+script = ExtResource( 11 )
 [connection signal="unit_selected" from="." to="GUI/ProfilePicture" method="_on_GameManager_unit_selected"]
 [connection signal="toggled" from="GUI/HBoxContainer/SoundToggle" to="GUI/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]
-[connection signal="timeout" from="SaladSpawner" to="SaladSpawner" method="_on_SaladSpawner_timeout"]
+[connection signal="timeout" from="ResourceSpawner" to="ResourceSpawner" method="_on_ResourceSpawner_timeout"]

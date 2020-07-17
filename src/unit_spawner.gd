@@ -28,8 +28,10 @@ func get_unit_count():
 
 
 func register_new_worker(worker):
+	print("spawned worker %s" % worker)
 	_worker_count += 1
 	worker.connect("death", self, "_reduce_unit_count")
+	emit_signal("units_counts_updated", _worker_count, _gilet_count)
 
 
 func _reduce_unit_count(unit):

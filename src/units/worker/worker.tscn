@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/units/worker/states/working.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker/worker_state_manager.gd" type="Script" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://src/units/worker/states/fighting.gd" type="Script" id=12]
 [ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=13]
 [ext_resource path="res://res/audio/sounds/antho jvais tniker salo.wav" type="AudioStream" id=14]
-[ext_resource path="res://src/units/worker/states/navigating.gd" type="Script" id=15]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -104,12 +103,9 @@ input_pickable = true
 script = ExtResource( 2 )
 speed = 100.0
 
-[node name="Navigation2D" type="Navigation2D" parent="."]
-script = ExtResource( 15 )
-
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-frame = 1
+frame = 3
 speed_scale = 0.75
 playing = true
 script = ExtResource( 4 )
@@ -199,14 +195,12 @@ bus = "Sounds"
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
 [connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
 [connection signal="state_changed" from="." to="GatherLabel/GatherTimer" method="_on_Worker_state_changed"]
-[connection signal="target_out_of_reach" from="." to="HealthBar" method="_on_Worker_target_out_of_reach"]
-[connection signal="target_out_of_reach" from="." to="GatherLabel/GatherTimer" method="_on_Worker_target_out_of_reach"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
-[connection signal="body_entered" from="ResourceDetector" to="ResourceDetector" method="_on_SaladDetector_body_entered"]
-[connection signal="body_exited" from="ResourceDetector" to="ResourceDetector" method="_on_SaladDetector_body_exited"]
-[connection signal="resource_detected" from="ResourceDetector" to="." method="_on_SaladDetector_resource_detected"]
+[connection signal="body_entered" from="ResourceDetector" to="ResourceDetector" method="_on_ResourceDetector_body_entered"]
+[connection signal="body_exited" from="ResourceDetector" to="ResourceDetector" method="_on_ResourceDetector_body_exited"]
+[connection signal="resource_detected" from="ResourceDetector" to="." method="_on_ResourceDetector_resource_detected"]
 [connection signal="body_entered" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_entered"]
 [connection signal="body_exited" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_exited"]
 [connection signal="new_enemy" from="GiletArea" to="." method="_on_GiletArea_new_enemy"]
