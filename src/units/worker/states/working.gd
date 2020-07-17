@@ -45,7 +45,7 @@ func _switch_salad_or_stop_gathering():
 	else:
 		print("%s targets next salad %s" % [self, next])
 		worker.target(next)
-	
+
 
 func _gather():
 	if to_harvest == null:
@@ -70,5 +70,5 @@ func _on_Worker_target_out_of_reach():
 
 
 func _on_Worker_state_changed(new_state):
-	if gathering and new_state != worker.State.GATHERING:
+	if gathering and new_state != worker.States.GATHERING:
 		_stop_gathering()

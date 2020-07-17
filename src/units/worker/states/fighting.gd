@@ -1,5 +1,6 @@
 extends TextureProgress
 
+export var fighting_range = 128
 export var damage = 15
 export var atk_freq = 0.5
 export var max_health = 100
