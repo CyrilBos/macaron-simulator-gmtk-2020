@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "Navigator",
 "language": "GDScript",
-"path": "res://src/units/worker/states/navigating.gd"
+"path": "res://src/units/worker/state/navigating.gd"
 }, {
 "base": "Reference",
 "class": "RangeAttribute",

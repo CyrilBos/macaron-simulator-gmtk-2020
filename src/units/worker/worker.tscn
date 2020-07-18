@@ -1,17 +1,16 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://src/units/worker/states/working.gd" type="Script" id=1]
-[ext_resource path="res://src/units/worker/worker_state_manager.gd" type="Script" id=2]
+[ext_resource path="res://src/units/worker/state/working.gd" type="Script" id=1]
+[ext_resource path="res://src/units/worker/Worker.gd" type="Script" id=2]
 [ext_resource path="res://res/sprites/units/gilet_jaune-Sheet.png" type="Texture" id=3]
-[ext_resource path="res://src/units/worker/unit_selection.gd" type="Script" id=4]
-[ext_resource path="res://src/units/worker/gather_label.gd" type="Script" id=5]
-[ext_resource path="res://src/units/worker/resource_detector.gd" type="Script" id=6]
+[ext_resource path="res://src/units/worker/ui/unit_selection.gd" type="Script" id=4]
+[ext_resource path="res://src/units/worker/state/morale.gd" type="Script" id=5]
+[ext_resource path="res://src/units/worker/detection/resource_detector.gd" type="Script" id=6]
 [ext_resource path="res://res/sprites/units/worker-Sheet.png" type="Texture" id=7]
-[ext_resource path="res://src/units/worker/morale.gd" type="Script" id=8]
+[ext_resource path="res://src/units/worker/ui/gather_label.gd" type="Script" id=8]
 [ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
 [ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
-[ext_resource path="res://src/units/worker/seek_and_destroy.gd" type="Script" id=11]
-[ext_resource path="res://src/units/worker/states/fighting.gd" type="Script" id=12]
+[ext_resource path="res://src/units/worker/state/fighting.gd" type="Script" id=12]
 [ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=13]
 [ext_resource path="res://res/audio/sounds/antho jvais tniker salo.wav" type="AudioStream" id=14]
 
@@ -93,7 +92,51 @@ tracks/2/keys = {
 [sub_resource type="CircleShape2D" id=8]
 radius = 114.672
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="GDScript" id=9]
+script/source = "extends Node
+
+onready var worker = get_parent()
+
+var enemies = []
+
+signal new_enemy
+
+
+func next_enemy():
+	if enemies.size() == 0:
+		return null
+	
+	return enemies[0]
+	
+
+func contains(target):
+	if enemies.size() == 0:
+		return false
+		
+	return enemies.bsearch(target) <= enemies.size()
+	
+	
+func _on_GiletArea_body_entered(body):
+	if body.get_entity_type() == Entity.Types.UNIT and body != worker and not contains(body):
+		enemies.append(body)
+		emit_signal(\"new_enemy\", body)
+
+
+func _on_Worker_gilet_changed(is_gilet):
+	if is_gilet:
+		$CollisionShape2D.set_deferred(\"disabled\", false)
+	else:
+		$CollisionShape2D.set_deferred(\"disabled\", true)
+
+
+func _on_GiletArea_body_exited(body):
+	if body.get_entity_type() == Entity.Types.UNIT:
+		var idx = enemies.bsearch(body)
+		if idx < enemies.size():
+			enemies.remove(idx)
+"
+
+[sub_resource type="CircleShape2D" id=10]
 radius = 229.547
 
 [node name="Worker" type="KinematicBody2D"]
@@ -124,7 +167,7 @@ custom_colors/font_color = Color( 1, 1, 1, 0 )
 text = "+5 food"
 align = 1
 valign = 1
-script = ExtResource( 5 )
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -144,11 +187,11 @@ shape = SubResource( 8 )
 [node name="GiletArea" type="Area2D" parent="."]
 input_pickable = false
 monitorable = false
-script = ExtResource( 11 )
+script = SubResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GiletArea"]
 position = Vector2( -1.68457, -1.06427 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 disabled = true
 
 [node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="GiletArea"]
@@ -164,7 +207,7 @@ rect_scale = Vector2( 0.6, 0.6 )
 value = 50.0
 texture_under = ExtResource( 9 )
 texture_progress = ExtResource( 10 )
-script = ExtResource( 8 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -191,10 +234,7 @@ __meta__ = {
 stream = ExtResource( 13 )
 volume_db = 11.794
 bus = "Sounds"
-[connection signal="gilet_changed" from="." to="GiletArea" method="_on_Worker_gilet_changed"]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
-[connection signal="state_changed" from="." to="MoraleBar" method="_on_Worker_state_changed"]
-[connection signal="state_changed" from="." to="GatherLabel/GatherTimer" method="_on_Worker_state_changed"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]

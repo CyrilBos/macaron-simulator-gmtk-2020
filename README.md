@@ -10,27 +10,36 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
  
 => The player loses the control you usually have in a RTS game, and has to adapt to the new configuration
 
-# Adaptatation to submit Godot Wild Jam 23 "MiniWorld"
-- more serious & less political theme? I don't know, like including a Macaron boss that you decapi...cut in half!
-MACRABRON THE BOSS TO KILL WITH YOUR UNITS!
-BE CAREFUL, HE TRANSFORMS YOUR UNITS BACK INTO WORKERS WITH HIS MONEY ATTACK!
+# Attack of the Macrabron(s)! Adaptation to submit to Godot Wild Jam 23 "MiniWorld"
+## TODO: 
 - remove the "out of control-ness"
+    - better navigation
+    - units stop fighting each other
+- more serious & less political theme? I don't know, like including a Macaron boss that you decapi...cut in half!
+- MACRABRON THE BOSS TO KILL WITH YOUR UNITS! BE CAREFUL, HE TRANSFORMS YOUR UNITS BACK INTO WORKERS WITH HIS MONEY ATTACK!
+
+1. macrabron aggro toutes les unités, à la fois gilet jaune et travailleurs
+2. il y a des money printers qu'on peut utiliser pour spawn plus d'unités
+3. zone safe boss kitable derrière les arbres, mais il retarget après un certain temps bloqué
+4. les money printers respawnent (et sont temporaires?), jusqu'à un certain max et toujours au moins un certain nombre mini
+5. hors de sa zone d'aggro, macrabron marche comme un crabe. seulement horizontalement (peut-être un peu de biais)
+
+
+- retransfo worker at 50 morale? (100?)
+- move kill (=unit death) sound to Macrabron
+
+
+
+## Ideas:
+
+- gain morale while fighting / getting thrown money at your face
 - link ends of screens horizontally and vertically (portals)
+- flee AI when being beaten up / lose morale
+- JUICE or idle AI to be continued OR combat mechanic
 
-
-# Ideas
-
-## TODO list
-1. retransfo worker at 50 morale? (100?)
-2. gain morale while fighting / getting thrown money at your face
-3. flee AI when being beaten up / lose morale
-4. JUICE or idle AI to be continued OR combat mechanic
-
-4. morale out-of-control
+- morale out-of-control
     - fighting reduces it,
     - someone else harvesting food from the same machine as you reduces it
-
-- enemy?
 
 - NO multiple unit management! Because I don't have time and it's more "fun" to micromanage your baby units doing whatever they want
 

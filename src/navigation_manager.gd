@@ -4,3 +4,10 @@ extends Node
 
 func compute_path(start, end):
 	return [end] # TODO: use new Nav API with unstable Godot
+
+
+func get_random_position_inside_viewport(border_size):
+	var viewport = get_viewport()
+	print(viewport.size)
+	return Vector2(rand_range(border_size, viewport.size.x - border_size),
+		rand_range(border_size, viewport.size.y - border_size))

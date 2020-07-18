@@ -2,6 +2,7 @@ extends Object
 
 class_name Navigator
 
+const RANDOM_POS_SEARCH_DISTANCE = 150
 
 var _path = null
 
@@ -28,7 +29,12 @@ func target_is_in_range(cur_pos, target_pos, reach):
 			
 	return _get_distance_between(cur_pos, target_pos) < reach
 		
+
+
+func get_wandering_pos():
+	return NavigationManager.get_random_position_inside_viewport(RANDOM_POS_SEARCH_DISTANCE)
 	
+
 # returns the movement vector to apply in _ready()
 func _get_direction(cur_pos):
 	if _path == null:

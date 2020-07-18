@@ -20,34 +20,12 @@ signal gilet_changed
 
 signal death
 
-onready var _sprite = $AnimatedSprite
-onready var morale_bar = $MoraleBar
-onready var gatherer = $GatherLabel/GatherTimer
-onready var fight_logic = $HealthBar
-onready var seek_detector = $GiletArea
-onready var resource_detector = $ResourceDetector
-onready var _seek_enemy_sound = $GiletArea/GiletSeekSound
-
-var _current_state = States.IDLE
 
 var _gilet setget ,is_gilet
 
-func get_entity_type():
+
+static func get_entity_type():
 	return Entity.Types.UNIT
-
-
-func reset_state():
-	_switch_state_to(States.IDLE)
-	
-	if is_gilet():
-		seek(seek_detector.next_enemy())
-	else:
-		target(resource_detector.next_resource())
-
-
-func _on_new_unit_selected(selected_unit):
-	if self != selected_unit and is_gilet():
-		seek(seek_detector.next_enemy())
 
 
 func is_moving():
@@ -59,7 +37,7 @@ func is_gilet():
 
 
 func lose_health(dmg):
-	fight_logic.lose_health(dmg)
+	fighting.lose_health(dmg)
 
 
 func get_morale():
@@ -67,18 +45,19 @@ func get_morale():
 
 
 func move_to(pos):
-	_movement_target == pos
+	_movement_target = pos
 	_switch_state_to(States.MOVING)
 	
+
 # TODO: same as as seek? or seek only for moving targets? And then working should use move_to?
 func target(targeted):
 	_target_node = targeted
 	_switch_state_to(States.SEEKING)
 
 
-func seek(enemy):
+func seek(enemy): # private?
 	if enemy == null:
-		print("not a poor dude bro")
+		print("[BUG] trying to seek a null enemy")
 		return
 	
 	if enemy != _target_node:
@@ -87,9 +66,21 @@ func seek(enemy):
 	target(enemy)
 
 
-var _movement_target = null
-var _target_node = null
-var _nav_handler = Navigator.new()
+func GILET_JAUNE(): #TODO: private and signal in morale?
+	_gilet = true
+	_sprite.play("gilet")
+	_reset_state()
+	emit_signal("gilet_changed", true)
+
+
+onready var _sprite = $AnimatedSprite
+onready var morale_bar = $MoraleBar
+onready var gatherer = $GatherLabel/GatherTimer
+onready var fighting = $HealthBar
+onready var seek_detector = $GiletArea
+onready var resource_detector = $ResourceDetector
+onready var _seek_enemy_sound = $GiletArea/GiletSeekSound
+
 
 func _ready():
 	_switch_state_to(initial_state)
@@ -101,9 +92,16 @@ func _ready():
 	# TODO: clean up children dependencies "injection" like this
 	gatherer.set_resource_detector(resource_detector)
 	
-	var err = GameManager.connect("unit_selected", self, "_on_new_unit_selected")
+	var err = GameManager.connect("unit_selected", self, "_reset_state")
 	if err:
 		print(err)
+		
+
+var _movement_target = null
+var _target_node = null
+var _nav_handler = Navigator.new()
+
+var _current_state = States.IDLE
 
 
 func _process(_delta):
@@ -120,24 +118,6 @@ func _process(_delta):
 					_fight()
 
 
-func _wander():
-	# TODO: target resource / enemy automatically
-	var global_pos = self.get_global_position()
-	var random_vector = Vector2(rand_range(-RANDOM_POS_SEARCH_DISTANCE, RANDOM_POS_SEARCH_DISTANCE),
-	 rand_range(-RANDOM_POS_SEARCH_DISTANCE, RANDOM_POS_SEARCH_DISTANCE))
-	move_to(global_pos + random_vector)
-
-
-func _gather():
-	gatherer.gather(_target_node)
-	_switch_state_to(States.WORKING)
-
-
-func _fight():
-	fight_logic.fight(_target_node)
-	_switch_state_to(States.FIGHTING)
-	
-
 func _physics_process(_delta):
 	if not _current_state in NAVIGATING_STATES:
 		return
@@ -150,7 +130,7 @@ func _physics_process(_delta):
 	
 	var direction = _nav_handler.follow(self.get_global_position(), target_pos, _get_target_range())
 	
-	if direction == null:
+	if direction == null or direction == Vector2.ZERO:
 		_compute_new_state()
 		return
 	
@@ -161,9 +141,20 @@ func _physics_process(_delta):
 		_nav_handler.follow(self.get_global_position(), target_pos, _get_target_range(), true)
 
 
-func _get_target_range():
-	return movement_delta if _current_state == States.MOVING else targetting_range
+func _wander():
+	# TODO: target resource / enemy automatically? Using next_enemy() and next_resource()
+	move_to(_nav_handler.get_wandering_pos())
 
+
+func _gather():
+	gatherer.gather(_target_node)
+	_switch_state_to(States.WORKING)
+
+
+func _fight():
+	fighting.fight(_target_node)
+	_switch_state_to(States.FIGHTING)
+	
 
 func _compute_new_state():
 	_wander()
@@ -172,17 +163,21 @@ func _compute_new_state():
 func _switch_state_to(new_state):
 	_current_state = new_state
 	emit_signal("state_changed", new_state)
-	
+
+
+func _reset_state():
+	_compute_new_state()
+
 
 func _take_a_step_towards(direction):
 	return move_and_slide(direction * speed)
+	
+
+func _get_target_range():
+	return movement_delta if _current_state == States.MOVING else targetting_range
 
 
-func GILET_JAUNE():
-	_gilet = true
-	_sprite.play("gilet")
-	reset_state()
-	emit_signal("gilet_changed", true)
+
 
 
 func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
@@ -201,16 +196,15 @@ func _on_HealthBar_death():
 
 
 func _on_HealthBar_killed():
-	reset_state()
+	_reset_state()
 
 
 func _on_GiletArea_new_enemy(enemy):
 	if is_gilet():
-		if _target_node == null: # TODO: is macrabron
+		if _target_node == null:
 			seek(enemy)
 
 
 func _on_ResourceDetector_resource_detected(resource):
 	if _current_state != States.SEEKING and _current_state != States.WORKING and not is_gilet():
 		target(resource)
-
