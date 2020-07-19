@@ -1,6 +1,6 @@
 extends TextureProgress
 
-export var _fighting_range = 128
+export var _fighting_range = 250
 export var damage = 15
 export var atk_freq = 0.5
 export var max_health = 100
@@ -61,7 +61,7 @@ func _attack():
 	var dmg = rand_range(damage / 2, damage)
 	print ("%s attacks %s for %d dmg!" % [self, target, dmg])
 	target.lose_health(dmg)
-	if target.get_node("HealthBar").is_dead():
+	if target.is_dead():
 		_kill()
 
 
@@ -69,5 +69,6 @@ func _on_AttackTimer_timeout():
 	_attack()
 
 
+# TODO: fix lol!
 func _on_Worker_target_out_of_reach():
 	in_range = false

@@ -12,6 +12,8 @@ var to_harvest = null
 signal gather_ticked
 
 
+onready var game_manager = SceneFinder.get_game_manager()
+
 func set_resource_detector(value):
 	resource_detector = value
 
@@ -51,7 +53,7 @@ func _gather():
 		_switch_resource_or_stop_working()
 	else:
 		to_harvest.get_gathered(harvest_amount)
-		GameManager.store_food(harvest_amount)
+		game_manager.store_food(harvest_amount)
 		emit_signal("gather_ticked", harvest_amount)
 
 

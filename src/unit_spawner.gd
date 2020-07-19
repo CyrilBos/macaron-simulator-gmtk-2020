@@ -8,11 +8,13 @@ signal units_counts_updated
 const WORKER = preload("res://src/units/worker/worker.tscn")
 const food_threshold_spawn = 40
 
+onready var game_manager = SceneFinder.get_game_manager()
+
 onready var viewport = get_viewport()
 
 
 func _ready():
-	GameManager.connect("food_updated", self, "_spawn_unit_if_threshold_reached")
+	game_manager.connect("food_updated", self, "_spawn_unit_if_threshold_reached")
 
 
 func get_worker_count():
@@ -45,13 +47,13 @@ func _reduce_unit_count(unit):
 
 func _spawn_unit_if_threshold_reached(total_food):
 	if total_food >= food_threshold_spawn:
-		GameManager.consume_food(food_threshold_spawn)
+		game_manager.consume_food(food_threshold_spawn)
 		var new_worker = WORKER.instance()
 	
 		var rnd_pos = Vector2(rand_range(50, viewport.size.x - 50), rand_range(50 , viewport.size.y - 50))
 		new_worker.global_translate(rnd_pos)
 		
-		GameManager.add_child(new_worker)
+		game_manager.add_child(new_worker)
 		
 		register_new_worker(new_worker)
 		

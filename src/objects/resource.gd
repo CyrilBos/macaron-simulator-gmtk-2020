@@ -12,6 +12,8 @@ signal harvested
 
 onready var sprite = $AnimatedSprite
 
+onready var game_manager = SceneFinder.get_game_manager()
+
 
 func get_entity_type():
 	return Entity.Types.RESOURCE;
@@ -32,4 +34,4 @@ func reset_animation():
 
 func _on_StaticBody_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and Input.is_mouse_button_pressed(BUTTON_RIGHT):
-		GameManager.target(self)
+		game_manager.target(self)

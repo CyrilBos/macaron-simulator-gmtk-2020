@@ -1,13 +1,15 @@
 extends TextureRect
 
+onready var game_manager = SceneFinder.get_game_manager()
 onready var morale_label = $MoraleLabel
+
 
 const happy_string = "il est content" # TODO: i18n
 const unhappy_string = "il est pas très content"
 const gilet_string = "il a le moral dans les chaussettes. MOKRON DÉMISSION!"
 
 func _ready():
-	GameManager.connect("unit_selected", self, "display_picture")
+	game_manager.connect("unit_selected", self, "display_picture")
 
 
 func display_picture(selected_unit):

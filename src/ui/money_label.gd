@@ -1,7 +1,10 @@
-extends RichTextLabel
+extends Label
+
+onready var game_manager = SceneFinder.get_game_manager()
+
 
 func _ready():
-	var err = GameManager.connect("food_updated", self, "_update_food_counter")
+	var err = game_manager.connect("food_updated", self, "_update_food_counter")
 	if err:
 		print(err)
 

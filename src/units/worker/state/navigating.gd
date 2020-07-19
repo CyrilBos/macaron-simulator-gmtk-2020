@@ -4,6 +4,12 @@ class_name Navigator
 
 const RANDOM_POS_SEARCH_DISTANCE = 150
 
+
+var _nav_manager = null
+
+func _init(nav_manager):
+	_nav_manager = nav_manager
+
 var _path = null
 
 var _last_target = null
@@ -17,7 +23,7 @@ func follow(cur_pos, target_pos, reach, collided = false):
 	# recalculate path if target has moved or we collided
 	if collided or _last_target != target_pos:
 		_last_target = target_pos
-		_path = NavigationManager.compute_path(cur_pos, target_pos)
+		_path = _nav_manager.compute_path(cur_pos, target_pos)
 		
 	return _get_direction(cur_pos)
 	
@@ -32,7 +38,7 @@ func target_is_in_range(cur_pos, target_pos, reach):
 
 
 func get_wandering_pos():
-	return NavigationManager.get_random_position_inside_viewport(RANDOM_POS_SEARCH_DISTANCE)
+	return _nav_manager.get_random_position_inside_viewport(RANDOM_POS_SEARCH_DISTANCE)
 	
 
 # returns the movement vector to apply in _ready()

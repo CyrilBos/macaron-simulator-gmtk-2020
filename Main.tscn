@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/units/worker/Worker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://res/sprites/scene.png" type="Texture" id=2]
@@ -15,6 +15,9 @@
 [ext_resource path="res://src/ui/sound_toggle.gd" type="Script" id=13]
 [ext_resource path="res://src/units/macrabron/Macrabron.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/objects/MoneyPrinter.tscn" type="PackedScene" id=15]
+[ext_resource path="res://src/ui/macrabron_health_bar.tscn" type="PackedScene" id=16]
+[ext_resource path="res://res/fonts/PressStart2B-Regular.tres" type="DynamicFontData" id=17]
+[ext_resource path="res://res/fonts/PressStart2B-Regular-font.tres" type="DynamicFont" id=18]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -25,6 +28,12 @@ font_data = ExtResource( 6 )
 [sub_resource type="DynamicFont" id=2]
 size = 48
 font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 17 )
 
 [node name="GameManager" type="Node"]
 script = ExtResource( 4 )
@@ -75,6 +84,7 @@ __meta__ = {
 }
 
 [node name="HelpContainer" type="MarginContainer" parent="GUI"]
+visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -119,15 +129,52 @@ autowrap = true
 clip_text = true
 script = ExtResource( 10 )
 
-[node name="MoneyLabel" type="RichTextLabel" parent="GUI"]
-margin_left = 15.0
+[node name="VSplitContainer" type="VSplitContainer" parent="GUI"]
+margin_left = 16.0
 margin_top = 16.0
-margin_right = 83.0
-margin_bottom = 31.0
-mouse_filter = 2
-text = "Money: 0
-"
+margin_right = 332.0
+margin_bottom = 68.0
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="MarginContainer" parent="GUI/VSplitContainer"]
+margin_right = 316.0
+margin_bottom = 20.0
+
+[node name="MoneyLabel" type="Label" parent="GUI/VSplitContainer/HBoxContainer2"]
+margin_right = 316.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 20 )
+custom_fonts/font = ExtResource( 18 )
+text = "Money: 0"
 script = ExtResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/VSplitContainer"]
+margin_top = 28.0
+margin_right = 316.0
+margin_bottom = 52.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundToggleLabel" type="Label" parent="GUI/VSplitContainer/HBoxContainer"]
+margin_top = 4.0
+margin_right = 288.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 18 )
+text = "Toggle the sounds:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundToggle" type="CheckBox" parent="GUI/VSplitContainer/HBoxContainer"]
+margin_left = 292.0
+margin_right = 316.0
+margin_bottom = 24.0
+pressed = true
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -159,46 +206,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -164.0
-margin_top = -40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoundToggleLabel" type="Label" parent="GUI/HBoxContainer"]
-margin_top = 13.0
-margin_right = 120.0
-margin_bottom = 27.0
-text = "Toggle the sounds:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoundToggle" type="CheckBox" parent="GUI/HBoxContainer"]
-margin_left = 124.0
-margin_right = 148.0
-margin_bottom = 40.0
-pressed = true
-script = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control" type="Control" parent="GUI"]
+[node name="MacrabronHealthControl" type="Control" parent="GUI"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -400.0
-margin_top = -40.0
-margin_right = 400.0
+margin_left = -486.5
+margin_top = -84.0
+margin_right = 486.5
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HSplitContainer" type="HSplitContainer" parent="GUI/MacrabronHealthControl"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/MacrabronHealthControl/HSplitContainer"]
+margin_top = 17.0
+margin_right = 320.0
+margin_bottom = 49.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 0.6, 0.176471, 1 )
+text = "MACRABRON:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" parent="GUI/MacrabronHealthControl/HSplitContainer" instance=ExtResource( 16 )]
+margin_left = 332.0
+margin_top = 0.0
+margin_right = 972.0
+margin_bottom = 66.0
 [connection signal="unit_selected" from="." to="GUI/ProfilePicture" method="_on_GameManager_unit_selected"]
-[connection signal="toggled" from="GUI/HBoxContainer/SoundToggle" to="GUI/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]
+[connection signal="toggled" from="GUI/VSplitContainer/HBoxContainer/SoundToggle" to="GUI/VSplitContainer/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]

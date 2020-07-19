@@ -10,7 +10,7 @@ export var initial_state = States.IDLE
 export var initial_morale = 50
 
 export var speed = 20.0
-export var targetting_range = 92.0
+export var targetting_range = 160.0
 export var movement_delta = 16
 
 
@@ -74,6 +74,9 @@ func GILET_JAUNE(): #TODO: private and signal in morale?
 	emit_signal("gilet_changed", true)
 
 
+onready var game_manager = SceneFinder.get_game_manager()
+onready var _nav_handler = load("res://src/units/worker/state/navigating.gd").new(SceneFinder.get_navigation_manager())
+
 onready var _sprite = $AnimatedSprite
 onready var morale_bar = $MoraleBar
 onready var gatherer = $GatherLabel/GatherTimer
@@ -92,14 +95,14 @@ func _ready():
 	# TODO: clean up children dependencies "injection" like this
 	gatherer.set_resource_detector(resource_detector)
 	
-	var err = GameManager.connect("unit_selected", self, "_reset_state")
+	var err = game_manager.connect("unit_selected", self, "_reset_state_if_unselected")
 	if err:
 		print(err)
 		
 
 var _movement_target = null
 var _target_node = null
-var _nav_handler = load("res://src/units/worker/state/navigating.gd").new()
+
 
 var _current_state = States.IDLE
 
@@ -114,7 +117,7 @@ func _process(_delta):
 			if _target_node.get_entity_type() == Entity.Types.RESOURCE:
 					_gather()
 				
-			elif _target_node.get_entity_type() == Entity.Types.UNIT:
+			elif _target_node.get_entity_type() == Entity.Types.ENEMY:
 					_fight()
 
 
@@ -181,8 +184,17 @@ func _take_a_step_towards(direction):
 	
 
 func _get_target_range():
-	return movement_delta if _current_state == States.MOVING else targetting_range
+	if _current_state == States.MOVING:
+		return movement_delta
+	elif _current_state == States.SEEKING:
+		return targetting_range
 
+
+
+func _reset_state_if_unselected(new_selected):
+	if new_selected != self:
+		_reset_state()
+	
 
 signal state_changed
 signal gilet_changed
@@ -192,7 +204,7 @@ signal death
 
 func _on_KinematicBody2D_input_event(_viewport, _event, _shape_idx):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-		GameManager.select_unit(self)
+		game_manager.select_unit(self)
 		_sprite.draw_selection()
 		
 

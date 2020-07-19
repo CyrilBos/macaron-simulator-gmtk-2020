@@ -38,9 +38,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GameManager="*res://src/game_manager.gd"
 Entity="*res://src/entity.gd"
-NavigationManager="*res://src/navigation_manager.gd"
+SceneFinder="*res://src/SceneFinder.gd"
 
 [display]
 
