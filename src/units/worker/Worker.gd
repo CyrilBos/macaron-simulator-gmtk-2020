@@ -40,6 +40,9 @@ func lose_health(dmg):
 	fighting.lose_health(dmg)
 
 
+func is_dead():
+	return fighting.is_dead()
+
 func get_morale():
 	return morale_bar.get_value()
 
@@ -71,7 +74,7 @@ func GILET_JAUNE(): #TODO: private and signal in morale?
 
 
 onready var game_manager = SceneFinder.get_game_manager()
-onready var _nav_handler = load("res://src/units/worker/state/navigating.gd").new(SceneFinder.get_navigation_manager())
+onready var _nav_handler = load("res://src/units/navigating.gd").new()
 
 onready var _sprite = $AnimatedSprite
 onready var morale_bar = $MoraleBar

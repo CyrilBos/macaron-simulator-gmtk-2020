@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/units/gilet_detector.gd" type="Script" id=1]
 [ext_resource path="res://src/units/Macrabron/Macrabron.gd" type="Script" id=2]
 [ext_resource path="res://res/sprites/macrabron.png" type="Texture" id=3]
+[ext_resource path="res://res/audio/sounds/alexa weird tummy sound.wav" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64.0851, 64.1148 )
@@ -37,7 +38,6 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="GiletDetector" type="Area2D" parent="."]
@@ -45,6 +45,9 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GiletDetector"]
 shape = SubResource( 5 )
+
+[node name="SeekSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
 [connection signal="input_event" from="." to="." method="_on_KinematicBody2D_input_event"]
 [connection signal="body_entered" from="GiletDetector" to="GiletDetector" method="_on_GiletDetector_body_entered"]
 [connection signal="body_exited" from="GiletDetector" to="GiletDetector" method="_on_GiletDetector_body_exited"]

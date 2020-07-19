@@ -81,8 +81,8 @@ func get_target_pos(is_moving):
 	return _mvt_tgt_pos if is_moving else _target_node.get_global_position()
 
 
-func _init(nav_manager):
-	_nav_manager = nav_manager
+func _init():
+	_nav_manager = SceneFinder.get_navigation_manager()
 	
 
 func _assign_path(cur_pos, tgt_pos):

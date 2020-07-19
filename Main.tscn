@@ -238,6 +238,9 @@ margin_left = 332.0
 margin_top = 0.0
 margin_right = 972.0
 margin_bottom = 66.0
+damage = 35
+atk_freq = 0.75
+max_health = 2000
 
 [node name="StaticBody" parent="." instance=ExtResource( 15 )]
 position = Vector2( 743.876, 91.9239 )

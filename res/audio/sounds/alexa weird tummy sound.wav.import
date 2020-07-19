@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/alexa weird tummy sound.wav-92e500fd80d2e531a60f27bd47353289.sample"
+
+[deps]
+
+source_file="res://res/audio/sounds/alexa weird tummy sound.wav"
+dest_files=[ "res://.import/alexa weird tummy sound.wav-92e500fd80d2e531a60f27bd47353289.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
