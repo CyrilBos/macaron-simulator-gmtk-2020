@@ -5,51 +5,52 @@
 [ext_resource path="res://res/sprites/units/gilet_jaune-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://src/units/worker/ui/unit_selection.gd" type="Script" id=4]
 [ext_resource path="res://src/units/worker/state/morale.gd" type="Script" id=5]
-[ext_resource path="res://src/units/worker/detection/resource_detector.gd" type="Script" id=6]
+[ext_resource path="res://src/units/worker/resource_detector.gd" type="Script" id=6]
 [ext_resource path="res://res/sprites/units/worker-Sheet.png" type="Texture" id=7]
 [ext_resource path="res://src/units/worker/ui/gather_label.gd" type="Script" id=8]
 [ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
 [ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
+[ext_resource path="res://src/units/worker/macrabron_detector.gd" type="Script" id=11]
 [ext_resource path="res://src/units/worker/state/fighting.gd" type="Script" id=12]
 [ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=13]
 [ext_resource path="res://res/audio/sounds/antho jvais tniker salo.wav" type="AudioStream" id=14]
 
-[sub_resource type="AtlasTexture" id=1]
-flags = 4
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 10.8325
+height = 10.3671
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 7 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 32, 32 )
+atlas = ExtResource( 7 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 3 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 1 ), SubResource( 2 ), SubResource( 2 ) ],
+"frames": [ SubResource( 2 ), SubResource( 2 ), SubResource( 3 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "gilet",
 "speed": 5.0
 } ]
-
-[sub_resource type="CapsuleShape2D" id=6]
-radius = 10.8325
-height = 10.3671
 
 [sub_resource type="Animation" id=7]
 tracks/0/type = "value"
@@ -92,70 +93,24 @@ tracks/2/keys = {
 [sub_resource type="CircleShape2D" id=8]
 radius = 114.672
 
-[sub_resource type="GDScript" id=9]
-script/source = "extends Node
-
-onready var worker = get_parent()
-
-var enemies = []
-
-signal new_enemy
-
-
-func next_enemy():
-	if enemies.size() == 0:
-		return null
-	
-	return enemies[0]
-	
-
-func contains(target):
-	if enemies.size() == 0:
-		return false
-		
-	return enemies.bsearch(target) <= enemies.size()
-	
-	
-func _on_GiletArea_body_entered(body):
-	if body.get_entity_type() == Entity.Types.UNIT and body != worker and not contains(body):
-		enemies.append(body)
-		emit_signal(\"new_enemy\", body)
-
-
-func _on_Worker_gilet_changed(is_gilet):
-	if is_gilet:
-		$CollisionShape2D.set_deferred(\"disabled\", false)
-	else:
-		$CollisionShape2D.set_deferred(\"disabled\", true)
-
-
-func _on_GiletArea_body_exited(body):
-	if body.get_entity_type() == Entity.Types.UNIT:
-		var idx = enemies.bsearch(body)
-		if idx < enemies.size():
-			enemies.remove(idx)
-"
-
 [sub_resource type="CircleShape2D" id=10]
 radius = 229.547
 
-[node name="Worker" type="KinematicBody2D"]
+[node name="KinematicBody2D" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
-z_index = -1
 input_pickable = true
 script = ExtResource( 2 )
 speed = 100.0
 
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( -0.01, 0.749 )
+shape = SubResource( 1 )
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 5 )
-frame = 3
+frames = SubResource( 6 )
 speed_scale = 0.75
 playing = true
 script = ExtResource( 4 )
-
-[node name="Collider" type="CollisionShape2D" parent="."]
-position = Vector2( -0.01, 0.749 )
-shape = SubResource( 6 )
 
 [node name="GatherLabel" type="Label" parent="."]
 visible = false
@@ -184,17 +139,17 @@ script = ExtResource( 6 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector"]
 shape = SubResource( 8 )
 
-[node name="GiletArea" type="Area2D" parent="."]
+[node name="MacrabronDetector" type="Area2D" parent="."]
 input_pickable = false
 monitorable = false
-script = SubResource( 9 )
+script = ExtResource( 11 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GiletArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MacrabronDetector"]
 position = Vector2( -1.68457, -1.06427 )
 shape = SubResource( 10 )
 disabled = true
 
-[node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="GiletArea"]
+[node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="MacrabronDetector"]
 stream = ExtResource( 14 )
 bus = "Sounds"
 
@@ -235,15 +190,13 @@ stream = ExtResource( 13 )
 volume_db = 11.794
 bus = "Sounds"
 [connection signal="input_event" from="." to="." method="_on_KinematicBody_input_event"]
-[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
 [connection signal="body_entered" from="ResourceDetector" to="ResourceDetector" method="_on_ResourceDetector_body_entered"]
 [connection signal="body_exited" from="ResourceDetector" to="ResourceDetector" method="_on_ResourceDetector_body_exited"]
-[connection signal="resource_detected" from="ResourceDetector" to="." method="_on_ResourceDetector_resource_detected"]
-[connection signal="body_entered" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_entered"]
-[connection signal="body_exited" from="GiletArea" to="GiletArea" method="_on_GiletArea_body_exited"]
-[connection signal="new_enemy" from="GiletArea" to="." method="_on_GiletArea_new_enemy"]
+[connection signal="body_entered" from="MacrabronDetector" to="MacrabronDetector" method="_on_MacrabronDetector_body_entered"]
+[connection signal="body_exited" from="MacrabronDetector" to="MacrabronDetector" method="_on_MacrabronDetector_body_exited"]
 [connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]
 [connection signal="death" from="HealthBar" to="." method="_on_HealthBar_death"]
 [connection signal="killed" from="HealthBar" to="." method="_on_HealthBar_killed"]

@@ -15,11 +15,6 @@ export var speed = 20.0
 export var targetting_range = 64.0
 export var movement_delta = 16
 
-signal state_changed
-signal gilet_changed
-
-signal death
-
 
 var _gilet setget ,is_gilet
 
@@ -78,7 +73,7 @@ onready var morale_bar = $MoraleBar
 onready var gatherer = $GatherLabel/GatherTimer
 onready var fighting = $HealthBar
 onready var seek_detector = $GiletArea
-onready var resource_detector = $ResourceDetector
+onready var resource_detector = $MacrabronDetector
 onready var _seek_enemy_sound = $GiletArea/GiletSeekSound
 
 
@@ -121,8 +116,16 @@ func _process(_delta):
 func _physics_process(_delta):
 	if not _current_state in NAVIGATING_STATES:
 		return
-		
-	var target_pos = _movement_target if _current_state == States.MOVING else _target_node.get_global_position()
+	
+	
+	var target_pos = null
+	if _current_state == States.MOVING:
+		target_pos = _movement_target
+	elif _current_state == States.SEEKING:
+		target_pos = _target_node.get_global_position()
+	else:
+		print("[BUG] lol wtf did I do")
+		return
 	
 	if target_pos == null:
 		print("[BUG] target_pos was null for %s with state %s" % [self, _current_state])
@@ -177,7 +180,10 @@ func _get_target_range():
 	return movement_delta if _current_state == States.MOVING else targetting_range
 
 
+signal state_changed
+signal gilet_changed
 
+signal death
 
 
 func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
@@ -208,3 +214,4 @@ func _on_GiletArea_new_enemy(enemy):
 func _on_ResourceDetector_resource_detected(resource):
 	if _current_state != States.SEEKING and _current_state != States.WORKING and not is_gilet():
 		target(resource)
+

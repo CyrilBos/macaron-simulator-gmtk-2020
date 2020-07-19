@@ -1,3 +1,3 @@
 extends Node
 
-enum Types { UNIT, RESOURCE }
+enum Types { UNIT, RESOURCE, ENEMY }

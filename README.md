@@ -28,7 +28,8 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 - retransfo worker at 50 morale? (100?)
 - move kill (=unit death) sound to Macrabron
 
-
+## UX improvements
+- assign units to hotkeys
 
 ## Ideas:
 
@@ -43,7 +44,7 @@ Below certain thresholds the behaviour of the unit changes and it can start pick
 
 - NO multiple unit management! Because I don't have time and it's more "fun" to micromanage your baby units doing whatever they want
 
-## Themed UI/UX, "juice" & random shit
+## "juice" & random shit
 - animation Pokémon evolve-like between two sprites when transitioning to gilet
 
 - boire de la 86
