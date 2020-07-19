@@ -30,7 +30,7 @@ func select_unit(selected):
 
 func target(targeted):
 	if selected_unit != null:
-		selected_unit.target(targeted)
+		selected_unit.handle_right_click(targeted)
 		print("unit %s targets %s" % [selected_unit, targeted])
 
 

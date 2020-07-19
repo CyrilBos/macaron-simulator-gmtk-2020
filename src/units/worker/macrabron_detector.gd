@@ -1,4 +1,4 @@
-extends Node
+extends Detector
 
 
 func _body_is_detected(body):
@@ -6,8 +6,8 @@ func _body_is_detected(body):
 
 
 func _on_MacrabronDetector_body_entered(body):
-	pass # Replace with function body.
+	._append_detection(body)
 
 
 func _on_MacrabronDetector_body_exited(body):
-	pass # Replace with function body.
+	._remove(body)

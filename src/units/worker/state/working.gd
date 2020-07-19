@@ -35,7 +35,7 @@ func _stop_working():
 func _switch_resource_or_stop_working():
 	self.stop()
 	
-	var next = resource_detector.next_resource()
+	var next = resource_detector.pop_next_detection()
 	if next == null:
 		print ("no more resources in area, resume wandering")
 		_stop_working()

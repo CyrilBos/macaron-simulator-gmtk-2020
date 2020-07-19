@@ -39,6 +39,13 @@ func get_morale():
 	return morale_bar.get_value()
 
 
+func handle_right_click(targeted):
+	if targeted.get_entity_type() == Entity.Types.RESOURCE and not is_gilet():
+		target(targeted)
+	elif targeted.get_entity_type() == Entity.Types.ENEMY and is_gilet():
+		seek(targeted) 
+
+		
 func move_to(pos):
 	_movement_target = pos
 	_switch_state_to(States.MOVING)
@@ -55,10 +62,11 @@ func seek(enemy): # private?
 		print("[BUG] trying to seek a null enemy")
 		return
 	
-	if enemy != _target_node:
+	if enemy != _target_node and enemy.get_entity_type() == Entity.Types.ENEMY:
 		print("gilet %s seeks %s" % [self, enemy])
 		_seek_enemy_sound.play()
-	target(enemy)
+		
+		target(enemy)
 
 
 func GILET_JAUNE(): #TODO: private and signal in morale?
@@ -72,9 +80,8 @@ onready var _sprite = $AnimatedSprite
 onready var morale_bar = $MoraleBar
 onready var gatherer = $GatherLabel/GatherTimer
 onready var fighting = $HealthBar
-onready var seek_detector = $GiletArea
-onready var resource_detector = $MacrabronDetector
-onready var _seek_enemy_sound = $GiletArea/GiletSeekSound
+onready var resource_detector = $ResourceDetector
+onready var _seek_enemy_sound = $MacrabonDetector/GiletSeekSound
 
 
 func _ready():
@@ -94,7 +101,7 @@ func _ready():
 
 var _movement_target = null
 var _target_node = null
-var _nav_handler = Navigator.new()
+var _nav_handler = load("res://src/units/worker/state/navigating.gd").new()
 
 var _current_state = States.IDLE
 
@@ -186,11 +193,11 @@ signal gilet_changed
 signal death
 
 
-func _on_KinematicBody_input_event(_viewport, _event, _shape_idx):
+func _on_KinematicBody2D_input_event(_viewport, _event, _shape_idx):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 		GameManager.select_unit(self)
 		_sprite.draw_selection()
-
+		
 
 func _on_DeathSound_finished():
 	_switch_state_to(States.IDLE)
@@ -205,13 +212,11 @@ func _on_HealthBar_killed():
 	_reset_state()
 
 
-func _on_GiletArea_new_enemy(enemy):
-	if is_gilet():
-		if _target_node == null:
-			seek(enemy)
-
-
-func _on_ResourceDetector_resource_detected(resource):
-	if _current_state != States.SEEKING and _current_state != States.WORKING and not is_gilet():
+func _on_ResourceDetector_detected(resource):
+	if _current_state == States.IDLE and not is_gilet():
 		target(resource)
 
+
+func _on_MacrabronDetector_detected(macrabron):
+	if _current_state == States.IDLE and not is_gilet():
+		seek(macrabron)

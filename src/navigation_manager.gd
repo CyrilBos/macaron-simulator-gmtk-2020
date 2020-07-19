@@ -2,8 +2,8 @@
 extends Node
 
 
-func compute_path(start, end):
-	return [end] # TODO: use new Nav API with unstable Godot
+func compute_path(_start, end):
+	return [end] # TODO: use new Nav API with unstable Godot or replace make money printers spawn at static places
 
 
 func get_random_position_inside_viewport(border_size):

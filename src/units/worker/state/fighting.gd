@@ -9,7 +9,6 @@ var health = RangeAttribute.new(0, max_health)
 
 onready var attack_timer = $AttackTimer
 onready var kill_sound = $KillSound
-onready var seeker = get_parent().get_node("GiletArea")
 
 var target = null
 var in_range = false
