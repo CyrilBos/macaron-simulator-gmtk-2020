@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://res/fonts/PressStart2B-Regular-font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://res/sprites/macrabron.png" type="Texture" id=2]
+[ext_resource path="res://res/audio/CURSED FF7 fanfare.wav" type="AudioStream" id=3]
+
+[sub_resource type="NoiseTexture" id=1]
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 1 )
+expand = true
+
+[node name="Label" type="Label" parent="."]
+margin_left = 4.0
+margin_top = 5.0
+margin_right = 1274.0
+margin_bottom = 482.0
+custom_fonts/font = ExtResource( 1 )
+text = "YOU WON!!1!1!
+
+You killed your own boss. 
+
+Maybe they were a bad one,
+but you still needed them.
+
+Do you feel proud?
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 662.107, 843.807 )
+scale = Vector2( 5.22352, 6.15165 )
+frames = SubResource( 4 )
+playing = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true

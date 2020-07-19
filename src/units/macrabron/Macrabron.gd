@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 enum State { PATROLLING, SEEKING, FIGHTING }
 
-export var macrabron_range = 180
+export var macrabron_range = 150
 export var speed = 60
 onready var game_manager = SceneFinder.get_game_manager()
 onready var fighting = game_manager.get_node("GUI/MacrabronHealthControl/HSplitContainer/HealthBar")
@@ -53,7 +53,7 @@ func _physics_process(_delta):
 	if direction == null or direction == Vector2.ZERO:
 		return
 	
-	var collision = move_and_slide(direction * speed)
+	var _collision = move_and_slide(direction * speed)
 
 
 func lose_health(dmg):

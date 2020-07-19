@@ -22,7 +22,7 @@ func consume_food(cost):
 
 func select_unit(selected):
 	if selected_unit != null:
-		selected_unit.reset_state()
+		# selected_unit.reset_state()
 		selected_unit.get_node("AnimatedSprite").stop_drawing_selection()
 	selected_unit = selected
 	
@@ -48,3 +48,11 @@ func _input(event):
 	elif event is InputEventKey and event.pressed:
 		if event.scancode == KEY_H:
 			emit_signal("help_key")
+
+
+func _on_HealthBar_death():
+	_load_win_screen()
+	
+
+func _load_win_screen():
+	get_tree().change_scene("res://src/win_screen.tscn")

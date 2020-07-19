@@ -40,7 +40,7 @@ func _on_IdleMoraleTimer_timeout():
 
 
 func _on_Worker_state_changed(new_state):
-	if new_state == worker.States.MOVING:
+	if new_state in worker.ACTIVITY_STATES:
 		return
 	
 	if new_state == _current_worker_state:
@@ -48,7 +48,7 @@ func _on_Worker_state_changed(new_state):
 			
 	_current_worker_state = new_state
 	
-	if new_state == worker.States.IDLE && not worker.is_gilet():
+	if not worker.is_gilet():
 		_start_idle_morale_gain()
 
 

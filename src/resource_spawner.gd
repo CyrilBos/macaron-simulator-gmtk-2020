@@ -31,7 +31,7 @@ func _spawn_resources():
 
 
 func _spawn_resource(viewport_size):
-	var rnd_pos = Vector2(rand_range(50, viewport_size.x - 50), rand_range(50, viewport_size.y - 50))
+	var rnd_pos = Vector2(rand_range(200, viewport_size.x - 200), rand_range(200, viewport_size.y - 200))
 
 	var new_resource = RESOURCE.instance()
 	new_resource.global_translate(rnd_pos)

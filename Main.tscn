@@ -150,29 +150,28 @@ __meta__ = {
 }
 
 [node name="HBoxContainer2" type="MarginContainer" parent="GUI/VSplitContainer"]
-margin_right = 316.0
-margin_bottom = 20.0
+margin_right = 676.0
+margin_bottom = 36.0
 
 [node name="MoneyLabel" type="Label" parent="GUI/VSplitContainer/HBoxContainer2"]
-margin_right = 316.0
-margin_bottom = 20.0
+margin_right = 676.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 100, 20 )
 custom_fonts/font = ExtResource( 18 )
 text = "Money: 0"
 script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VSplitContainer"]
-margin_top = 28.0
-margin_right = 316.0
-margin_bottom = 52.0
+margin_top = 44.0
+margin_right = 676.0
+margin_bottom = 80.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SoundToggleLabel" type="Label" parent="GUI/VSplitContainer/HBoxContainer"]
-margin_top = 4.0
-margin_right = 288.0
-margin_bottom = 20.0
+margin_right = 648.0
+margin_bottom = 36.0
 custom_fonts/font = ExtResource( 18 )
 text = "Toggle the sounds:"
 __meta__ = {
@@ -180,9 +179,9 @@ __meta__ = {
 }
 
 [node name="SoundToggle" type="CheckBox" parent="GUI/VSplitContainer/HBoxContainer"]
-margin_left = 292.0
-margin_right = 316.0
-margin_bottom = 24.0
+margin_left = 652.0
+margin_right = 676.0
+margin_bottom = 36.0
 pressed = true
 script = ExtResource( 13 )
 __meta__ = {
@@ -261,3 +260,4 @@ atk_freq = 0.75
 [node name="StaticBody" parent="." instance=ExtResource( 15 )]
 position = Vector2( 743.876, 91.9239 )
 [connection signal="toggled" from="GUI/VSplitContainer/HBoxContainer/SoundToggle" to="GUI/VSplitContainer/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]
+[connection signal="death" from="GUI/MacrabronHealthControl/HSplitContainer/HealthBar" to="." method="_on_HealthBar_death"]

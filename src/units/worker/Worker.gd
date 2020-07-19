@@ -11,7 +11,7 @@ export var initial_morale = 50
 
 export var speed = 20.0
 export var printer_targetting_range = 90
-export var macrabron_targetting_range = 180
+export var macrabron_targetting_range = 150
 export var movement_delta = 16
 
 
@@ -134,10 +134,6 @@ func _physics_process(_delta):
 		return
 	
 	var collision = _take_a_step_towards(direction)
-
-	if collision:
-		# will recalculate path
-		_nav_handler.follow(self.get_global_position(), _is_moving(), _get_target_range(), true)
 
 
 func _is_moving():
