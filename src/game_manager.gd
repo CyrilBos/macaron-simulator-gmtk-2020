@@ -22,11 +22,12 @@ func consume_food(cost):
 
 func select_unit(selected):
 	if selected_unit != null:
+		selected_unit.reset_state()
 		selected_unit.get_node("AnimatedSprite").stop_drawing_selection()
 	selected_unit = selected
 	
-	emit_signal("unit_selected", selected_unit)
-
+	emit_signal("unit_selected", selected)
+	
 
 func target(targeted):
 	if selected_unit != null:
@@ -42,7 +43,7 @@ func store_food(amount):
 func _input(event):
 	if event is InputEventMouseButton and Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		if selected_unit != null:
-			print("ordered %s to move to %s" % [selected_unit,event.global_position])
+			print("ordered %s to move to %s" % [selected_unit, event.global_position])
 			selected_unit.move_to(event.global_position)
 	elif event is InputEventKey and event.pressed:
 		if event.scancode == KEY_H:

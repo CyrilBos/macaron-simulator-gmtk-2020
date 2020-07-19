@@ -42,18 +42,16 @@ script = ExtResource( 4 )
 position = Vector2( 640, 360 )
 texture = ExtResource( 2 )
 
+[node name="KinematicBody2D" parent="Background" instance=ExtResource( 1 )]
+
+[node name="KinematicBody2D2" parent="Background" instance=ExtResource( 1 )]
+
 [node name="Macrabron" parent="Background" instance=ExtResource( 14 )]
 position = Vector2( -159.869, 69.4265 )
-
-[node name="Worker" parent="Background" instance=ExtResource( 1 )]
-position = Vector2( 211.142, -155.518 )
 
 [node name="Gilet" parent="Background" instance=ExtResource( 1 )]
 position = Vector2( 211.142, -155.518 )
 initial_morale = 0
-
-[node name="Worker3" parent="Background" instance=ExtResource( 1 )]
-position = Vector2( -382.459, -241.027 )
 
 [node name="ResourceSpawner" type="Node" parent="."]
 script = ExtResource( 8 )
@@ -71,6 +69,10 @@ script = ExtResource( 11 )
 [node name="GUI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -11.3137
+margin_top = 2.82843
+margin_right = -11.3137
+margin_bottom = 2.82843
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false

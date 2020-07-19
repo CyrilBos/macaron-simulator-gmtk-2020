@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/units/detection/detector.gd"
 }, {
-"base": "Object",
-"class": "Navigator",
-"language": "GDScript",
-"path": "res://src/units/worker/state/navigating.gd"
-}, {
 "base": "Reference",
 "class": "RangeAttribute",
 "language": "GDScript",
@@ -26,7 +21,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Detector": "",
-"Navigator": "",
 "RangeAttribute": ""
 }
 

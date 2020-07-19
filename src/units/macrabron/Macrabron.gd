@@ -2,7 +2,7 @@ extends Node
 
 onready var game_manager = SceneFinder.get_game_manager()
 onready var fighting = game_manager.get_node("GUI/MacrabronHealthControl/HSplitContainer/HealthBar")
-
+onready var _nav_handler = load("res://src/units/navigating.gd").new(game_manager)
 
 func _ready():
 	fighting.connect("death", self, "_die")
