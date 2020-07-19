@@ -42,22 +42,18 @@ script = ExtResource( 4 )
 position = Vector2( 640, 360 )
 texture = ExtResource( 2 )
 
-[node name="Macrabron" parent="." instance=ExtResource( 14 )]
-position = Vector2( 480.131, 429.427 )
+[node name="Macrabron" parent="Background" instance=ExtResource( 14 )]
+position = Vector2( -159.869, 69.4265 )
 
-[node name="Worker" parent="." instance=ExtResource( 1 )]
-position = Vector2( 851.142, 204.482 )
+[node name="Worker" parent="Background" instance=ExtResource( 1 )]
+position = Vector2( 211.142, -155.518 )
 
-[node name="Gilet" parent="." instance=ExtResource( 1 )]
-position = Vector2( 851.142, 204.482 )
+[node name="Gilet" parent="Background" instance=ExtResource( 1 )]
+position = Vector2( 211.142, -155.518 )
 initial_morale = 0
 
-[node name="Worker3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 257.541, 118.973 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-current = true
+[node name="Worker3" parent="Background" instance=ExtResource( 1 )]
+position = Vector2( -382.459, -241.027 )
 
 [node name="ResourceSpawner" type="Node" parent="."]
 script = ExtResource( 8 )
@@ -67,7 +63,7 @@ script = ExtResource( 9 )
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-volume_db = -12.0
+volume_db = -20.283
 
 [node name="NavigationManager" type="Navigation2D" parent="."]
 script = ExtResource( 11 )
@@ -243,5 +239,4 @@ margin_bottom = 66.0
 
 [node name="StaticBody" parent="." instance=ExtResource( 15 )]
 position = Vector2( 743.876, 91.9239 )
-[connection signal="unit_selected" from="." to="GUI/ProfilePicture" method="_on_GameManager_unit_selected"]
 [connection signal="toggled" from="GUI/VSplitContainer/HBoxContainer/SoundToggle" to="GUI/VSplitContainer/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]

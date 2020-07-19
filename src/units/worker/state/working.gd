@@ -14,9 +14,11 @@ signal gather_ticked
 
 onready var game_manager = SceneFinder.get_game_manager()
 
+
 func set_resource_detector(value):
 	resource_detector = value
 
+	
 # TODO: extract this in another script, and use working as just a work_frequency timer to callback gathering
 # and do same for fighting? Or too much abstraction?
 func gather(resource):

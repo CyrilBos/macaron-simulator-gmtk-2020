@@ -106,7 +106,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
-frame = 2
+frame = 1
 speed_scale = 0.75
 playing = true
 script = ExtResource( 4 )
@@ -171,8 +171,8 @@ __meta__ = {
 
 [node name="HealthBar" parent="." instance=ExtResource( 12 )]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody2D_input_event"]
-[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]
 [connection signal="body_entered" from="ResourceDetector" to="ResourceDetector" method="_on_ResourceDetector_body_entered"]
 [connection signal="body_exited" from="ResourceDetector" to="ResourceDetector" method="_on_ResourceDetector_body_exited"]

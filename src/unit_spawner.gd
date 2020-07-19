@@ -53,7 +53,7 @@ func _spawn_unit_if_threshold_reached(total_food):
 		var rnd_pos = Vector2(rand_range(50, viewport.size.x - 50), rand_range(50 , viewport.size.y - 50))
 		new_worker.global_translate(rnd_pos)
 		
-		game_manager.add_child(new_worker)
+		game_manager.get_node("Background").add_child(new_worker)
 		
 		register_new_worker(new_worker)
 		

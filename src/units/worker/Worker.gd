@@ -10,7 +10,7 @@ export var initial_state = States.IDLE
 export var initial_morale = 50
 
 export var speed = 20.0
-export var targetting_range = 160.0
+export var targetting_range = 128.0
 export var movement_delta = 16
 
 

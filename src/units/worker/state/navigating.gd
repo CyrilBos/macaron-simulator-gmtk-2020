@@ -7,6 +7,7 @@ const RANDOM_POS_SEARCH_DISTANCE = 150
 
 var _nav_manager = null
 
+
 func _init(nav_manager):
 	_nav_manager = nav_manager
 
@@ -16,9 +17,12 @@ var _last_target = null
 
 	
 func follow(cur_pos, target_pos, reach, collided = false):
+	if _path == null:
+		_assign_path(cur_pos, target_pos)
 	
 	if target_is_in_range(cur_pos, target_pos, reach):
-		_path.pop_front()
+		if _path.size() > 0:
+			_path.pop_front()
 		
 	# recalculate path if target has moved or we collided
 	if collided or _last_target != target_pos:
@@ -34,12 +38,15 @@ func target_is_in_range(cur_pos, target_pos, reach):
 		return false
 			
 	return _get_distance_between(cur_pos, target_pos) < reach
-		
 
 
 func get_wandering_pos():
 	return _nav_manager.get_random_position_inside_viewport(RANDOM_POS_SEARCH_DISTANCE)
 	
+
+func _assign_path(cur_pos, target_pos):
+	_path = _nav_manager.compute_path(cur_pos, target_pos)
+
 
 # returns the movement vector to apply in _ready()
 func _get_direction(cur_pos):
@@ -52,6 +59,7 @@ func _get_direction(cur_pos):
 		return Vector2.ZERO
 	
 	return _get_distance_vec_between(cur_pos, _path[0]).normalized()
+
 
 # TODO: move to math helper script?
 static func _get_distance_vec_between(pos1, pos2):

@@ -6,14 +6,18 @@ const MIN_RESOURCE = 3
 
 const RESOURCE = preload("res://src/objects/MoneyPrinter.tscn")
 
-onready var unit_spawner = get_parent().get_node("UnitSpawner")
+onready var game_manager = SceneFinder.get_game_manager()
+onready var unit_spawner = game_manager.get_node("UnitSpawner")
+onready var objects_root = game_manager.get_node("Background")
 
 var resources_count = starting_resources_count
 
 
 func _ready():
+	var viewport = get_viewport()
+
 	for _n in range(starting_resources_count):
-		_spawn_resources()
+		_spawn_resource(viewport.size)
 
 
 func _spawn_resources():
@@ -33,4 +37,4 @@ func _spawn_resource(viewport_size):
 
 	new_resource.connect("harvested", self, "_spawn_resources")
 
-	get_parent().add_child(new_resource)
+	objects_root.call_deferred("add_child", new_resource)
