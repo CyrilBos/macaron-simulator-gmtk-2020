@@ -31,6 +31,7 @@ func toggle(toggled_on):
 
 signal detected
 
+
 # TODO: sort by distance?
 func _append_detection(body):
 	if not body in detections and _body_is_detected(body):

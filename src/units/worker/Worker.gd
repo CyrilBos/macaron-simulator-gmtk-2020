@@ -5,14 +5,12 @@ enum States { IDLE, MOVING, SEEKING, WORKING, FIGHTING }
 const NAVIGATING_STATES = [States.MOVING, States.SEEKING]
 const ACTIVITY_STATES = [States.WORKING, States.FIGHTING]
 
-const RANDOM_POS_SEARCH_DISTANCE = 150
-
 # export var animation = "default"
 export var initial_state = States.IDLE
 export var initial_morale = 50
 
 export var speed = 20.0
-export var targetting_range = 64.0
+export var targetting_range = 92.0
 export var movement_delta = 16
 
 
@@ -45,7 +43,7 @@ func handle_right_click(targeted):
 	elif targeted.get_entity_type() == Entity.Types.ENEMY and is_gilet():
 		seek(targeted) 
 
-		
+
 func move_to(pos):
 	_movement_target = pos
 	_switch_state_to(States.MOVING)
