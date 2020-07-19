@@ -39,6 +39,10 @@ position = Vector2( 480.131, 429.427 )
 [node name="Worker" parent="." instance=ExtResource( 1 )]
 position = Vector2( 851.142, 204.482 )
 
+[node name="Gilet" parent="." instance=ExtResource( 1 )]
+position = Vector2( 851.142, 204.482 )
+initial_morale = 0
+
 [node name="Worker3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 257.541, 118.973 )
 
@@ -49,7 +53,7 @@ position = Vector2( 1050.62, 129.989 )
 anchor_mode = 0
 current = true
 
-[node name="ResourceSpawner" type="Timer" parent="."]
+[node name="ResourceSpawner" type="Node" parent="."]
 script = ExtResource( 8 )
 
 [node name="UnitSpawner" type="Node" parent="."]
@@ -97,7 +101,7 @@ margin_right = 1248.0
 margin_bottom = 537.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
-text = "         PRESS H TO TOGGLE THE PAUSE AND THIS HELP
+text = "         PRESS H TO TOGGLE THIS HELP
 
 
 - left click to select a unit. Their stupid AI will take over if left idle.
@@ -121,7 +125,8 @@ margin_top = 16.0
 margin_right = 83.0
 margin_bottom = 31.0
 mouse_filter = 2
-text = "Food: 0"
+text = "Money: 0
+"
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -183,6 +188,17 @@ script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Control" type="Control" parent="GUI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -400.0
+margin_top = -40.0
+margin_right = 400.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="unit_selected" from="." to="GUI/ProfilePicture" method="_on_GameManager_unit_selected"]
-[connection signal="timeout" from="ResourceSpawner" to="ResourceSpawner" method="_on_ResourceSpawner_timeout"]
 [connection signal="toggled" from="GUI/HBoxContainer/SoundToggle" to="GUI/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]

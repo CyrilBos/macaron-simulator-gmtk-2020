@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=1]
+[ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=2]
+[ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=3]
+[ext_resource path="res://src/units/worker/state/fighting.gd" type="Script" id=4]
+
+[node name="HealthBar" type="TextureProgress"]
+margin_left = -28.6352
+margin_top = -35.4554
+margin_right = 29.3648
+margin_bottom = -29.4554
+value = 100.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 3 )
+tint_progress = Color( 0.8, 0.160784, 0.160784, 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="KillSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 1 )
+volume_db = 11.794
+bus = "Sounds"
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

@@ -30,7 +30,7 @@ func select_unit(selected):
 
 func target(targeted):
 	if selected_unit != null:
-		selected_unit.handle_right_click(targeted)
+		selected_unit.handle_manual_targeting(targeted)
 		print("unit %s targets %s" % [selected_unit, targeted])
 
 

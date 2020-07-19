@@ -37,7 +37,7 @@ func get_morale():
 	return morale_bar.get_value()
 
 
-func handle_right_click(targeted):
+func handle_manual_targeting(targeted):
 	if targeted.get_entity_type() == Entity.Types.RESOURCE and not is_gilet():
 		target(targeted)
 	elif targeted.get_entity_type() == Entity.Types.ENEMY and is_gilet():
@@ -79,7 +79,7 @@ onready var morale_bar = $MoraleBar
 onready var gatherer = $GatherLabel/GatherTimer
 onready var fighting = $HealthBar
 onready var resource_detector = $ResourceDetector
-onready var _seek_enemy_sound = $MacrabonDetector/GiletSeekSound
+onready var _seek_enemy_sound = $MacrabronDetector/GiletSeekSound
 
 
 func _ready():
@@ -150,7 +150,6 @@ func _physics_process(_delta):
 
 
 func _wander():
-	# TODO: target resource / enemy automatically? Using next_enemy() and next_resource()
 	move_to(_nav_handler.get_wandering_pos())
 
 
@@ -211,10 +210,10 @@ func _on_HealthBar_killed():
 
 
 func _on_ResourceDetector_detected(resource):
-	if _current_state == States.IDLE and not is_gilet():
+	if _current_state != States.WORKING and not is_gilet():
 		target(resource)
 
 
 func _on_MacrabronDetector_detected(macrabron):
-	if _current_state == States.IDLE and not is_gilet():
+	if _current_state == States.SEEKING and not is_gilet():
 		seek(macrabron)

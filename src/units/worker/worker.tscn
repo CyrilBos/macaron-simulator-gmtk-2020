@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://src/units/worker/state/working.gd" type="Script" id=1]
 [ext_resource path="res://src/units/worker/Worker.gd" type="Script" id=2]
@@ -11,48 +11,47 @@
 [ext_resource path="res://res/sprites/ui/morale_bar_underr.png" type="Texture" id=9]
 [ext_resource path="res://res/sprites/ui/morale_bar_progress.png" type="Texture" id=10]
 [ext_resource path="res://src/units/worker/macrabron_detector.gd" type="Script" id=11]
-[ext_resource path="res://src/units/worker/state/fighting.gd" type="Script" id=12]
-[ext_resource path="res://res/audio/sounds/le sang de leurs morts.wav" type="AudioStream" id=13]
+[ext_resource path="res://src/units/worker/ui/health_bar.tscn" type="PackedScene" id=12]
 [ext_resource path="res://res/audio/sounds/antho jvais tniker salo.wav" type="AudioStream" id=14]
 
-[sub_resource type="CapsuleShape2D" id=15]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 22.19
 height = 27.7084
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 7 )
 region = Rect2( 64, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=5]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 64, 0, 64, 64 )
 
-[sub_resource type="SpriteFrames" id=16]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 11 ), SubResource( 11 ), SubResource( 12 ), SubResource( 12 ) ],
+"frames": [ SubResource( 2 ), SubResource( 2 ), SubResource( 3 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 13 ), SubResource( 14 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "gilet",
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:custom_colors/font_color")
 tracks/0/interp = 1
@@ -90,10 +89,10 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=8]
 radius = 114.672
 
-[sub_resource type="CircleShape2D" id=19]
+[sub_resource type="CircleShape2D" id=9]
 radius = 229.547
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
@@ -103,11 +102,11 @@ speed = 100.0
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2( 1.03055, 2.97876 )
-shape = SubResource( 15 )
+shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 16 )
-frame = 2
+frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.75
 playing = true
 script = ExtResource( 4 )
@@ -128,7 +127,7 @@ __meta__ = {
 }
 
 [node name="Animation" type="AnimationPlayer" parent="GatherLabel"]
-anims/Slidisappear = SubResource( 17 )
+anims/Slidisappear = SubResource( 7 )
 
 [node name="GatherTimer" type="Timer" parent="GatherLabel"]
 script = ExtResource( 1 )
@@ -137,7 +136,7 @@ script = ExtResource( 1 )
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector"]
-shape = SubResource( 18 )
+shape = SubResource( 8 )
 
 [node name="MacrabronDetector" type="Area2D" parent="."]
 input_pickable = false
@@ -146,7 +145,7 @@ script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MacrabronDetector"]
 position = Vector2( -1.68457, -1.06427 )
-shape = SubResource( 19 )
+shape = SubResource( 9 )
 disabled = true
 
 [node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="MacrabronDetector"]
@@ -169,26 +168,7 @@ __meta__ = {
 
 [node name="IdleMoraleTimer" type="Timer" parent="MoraleBar"]
 
-[node name="HealthBar" type="TextureProgress" parent="."]
-margin_left = -28.6352
-margin_top = -35.4554
-margin_right = 29.3648
-margin_bottom = -29.4554
-value = 100.0
-texture_under = ExtResource( 9 )
-texture_progress = ExtResource( 10 )
-tint_progress = Color( 0.8, 0.160784, 0.160784, 1 )
-script = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AttackTimer" type="Timer" parent="HealthBar"]
-
-[node name="KillSound" type="AudioStreamPlayer2D" parent="HealthBar"]
-stream = ExtResource( 13 )
-volume_db = 11.794
-bus = "Sounds"
+[node name="HealthBar" parent="." instance=ExtResource( 12 )]
 [connection signal="input_event" from="." to="." method="_on_KinematicBody2D_input_event"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
@@ -200,7 +180,3 @@ bus = "Sounds"
 [connection signal="body_exited" from="MacrabronDetector" to="MacrabronDetector" method="_on_MacrabronDetector_body_exited"]
 [connection signal="detected" from="MacrabronDetector" to="." method="_on_MacrabronDetector_detected"]
 [connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]
-[connection signal="death" from="HealthBar" to="." method="_on_HealthBar_death"]
-[connection signal="killed" from="HealthBar" to="." method="_on_HealthBar_killed"]
-[connection signal="lost_health" from="HealthBar" to="MoraleBar" method="_on_HealthBar_lost_health"]
-[connection signal="timeout" from="HealthBar/AttackTimer" to="HealthBar" method="_on_AttackTimer_timeout"]

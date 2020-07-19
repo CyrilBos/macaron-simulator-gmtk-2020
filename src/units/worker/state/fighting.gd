@@ -1,6 +1,6 @@
 extends TextureProgress
 
-export var fighting_range = 128
+export var _fighting_range = 128
 export var damage = 15
 export var atk_freq = 0.5
 export var max_health = 100
@@ -16,6 +16,9 @@ var in_range = false
 signal lost_health
 signal death
 signal killed
+
+func get_fighting_range():
+	return _fighting_range
 
 func fight(to_fight):
 	if target == null:
