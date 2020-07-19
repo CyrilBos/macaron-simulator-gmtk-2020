@@ -81,6 +81,10 @@ func get_target_pos(is_moving):
 	return _mvt_tgt_pos if is_moving else _target_node.get_global_position()
 
 
+func get_direction(pos1, pos2):
+	return _get_distance_vec_between(pos1, pos2).normalized()
+
+
 func _init():
 	_nav_manager = SceneFinder.get_navigation_manager()
 	

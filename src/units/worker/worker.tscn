@@ -106,7 +106,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
-frame = 3
+frame = 2
 speed_scale = 0.75
 playing = true
 script = ExtResource( 4 )
@@ -150,7 +150,7 @@ disabled = true
 
 [node name="GiletSeekSound" type="AudioStreamPlayer2D" parent="MacrabronDetector"]
 stream = ExtResource( 14 )
-volume_db = -6.442
+volume_db = -11.964
 bus = "Sounds"
 
 [node name="MoraleBar" type="TextureProgress" parent="."]

@@ -48,6 +48,7 @@ shape = SubResource( 5 )
 
 [node name="SeekSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
+volume_db = -1.944
 [connection signal="input_event" from="." to="." method="_on_KinematicBody2D_input_event"]
 [connection signal="body_entered" from="GiletDetector" to="GiletDetector" method="_on_GiletDetector_body_entered"]
 [connection signal="body_exited" from="GiletDetector" to="GiletDetector" method="_on_GiletDetector_body_exited"]
