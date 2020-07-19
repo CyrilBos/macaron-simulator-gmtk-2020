@@ -1,7 +1,11 @@
 extends Node
 
 onready var game_manager = SceneFinder.get_game_manager()
-onready var fighting = game_manager.get_node("/GUI/MacrabronHealthControl/HSplitContainer/HealthBar")
+onready var fighting = game_manager.get_node("GUI/MacrabronHealthControl/HSplitContainer/HealthBar")
+
+
+func _ready():
+	fighting.connect("death", self, "_die")
 
 
 func get_entity_type():
@@ -10,6 +14,14 @@ func get_entity_type():
 
 func lose_health(dmg):
 	fighting.lose_health(dmg)
+	
+
+func is_dead():
+	return fighting.is_dead()
+
+
+func _die():
+	queue_free()
 
 
 func _on_KinematicBody2D_input_event(_viewport, event, _shape_idx):

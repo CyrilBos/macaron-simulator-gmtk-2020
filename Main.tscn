@@ -55,9 +55,6 @@ initial_morale = 0
 [node name="Worker3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 257.541, 118.973 )
 
-[node name="Printer" parent="." instance=ExtResource( 15 )]
-position = Vector2( 1050.62, 129.989 )
-
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
@@ -243,5 +240,8 @@ margin_left = 332.0
 margin_top = 0.0
 margin_right = 972.0
 margin_bottom = 66.0
+
+[node name="StaticBody" parent="." instance=ExtResource( 15 )]
+position = Vector2( 743.876, 91.9239 )
 [connection signal="unit_selected" from="." to="GUI/ProfilePicture" method="_on_GameManager_unit_selected"]
 [connection signal="toggled" from="GUI/VSplitContainer/HBoxContainer/SoundToggle" to="GUI/VSplitContainer/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]
