@@ -12,17 +12,18 @@ onready var _seek_sound = $SeekSound
 
 func _ready():
 	fighting.connect("death", self, "_die")
+	_switch_patrol_target()
 
 
 static func get_entity_type():
 	return Entity.Types.ENEMY
 
-const LEFT_PATROL_TARGET = Vector2(100, 100)
-const RIGHT_PATROL_TARGET = Vector2(1180, 620)
+const LEFT_PATROL_TARGET = Vector2(100, 400)
+const RIGHT_PATROL_TARGET = Vector2(1180, 400)
 
 var _targeted_gilet = null
 var _cur_state = State.PATROLLING
-var _patrol_target = LEFT_PATROL_TARGET
+var _patrol_target = RIGHT_PATROL_TARGET
 
 func _process(_delta):
 	var pos = self.get_global_position()
@@ -76,7 +77,7 @@ func _die():
 func _patrol_to(pos):
 	_targeted_gilet = null
 	_patrol_target = pos
-	_nav_handler.target(pos)
+	_nav_handler.move_to(pos)
 	_cur_state = State.PATROLLING
 
 func _target(gilet):

@@ -3,9 +3,7 @@ extends TextureProgress
 export var _fighting_range = 200
 export var damage = 15
 export var atk_freq = 0.5
-export var max_health = 100
-
-var health = RangeAttribute.new(0, max_health)
+export var max_health = 1000
 
 onready var attack_timer = $AttackTimer
 onready var kill_sound = $KillSound

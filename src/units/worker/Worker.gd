@@ -11,7 +11,7 @@ export var initial_morale = 50
 
 export var speed = 20.0
 export var printer_targetting_range = 90
-export var macrabron_targetting_range = 150
+export var macrabron_targetting_range = 180
 export var movement_delta = 16
 
 
@@ -175,6 +175,9 @@ func _get_target_range():
 	if _current_state == States.MOVING:
 		return movement_delta
 	elif _current_state == States.SEEKING:
+		if _target_node == null:
+			return 1000
+		
 		var target_type = _target_node.get_entity_type()
 		if target_type == Entity.Types.RESOURCE:
 			return printer_targetting_range

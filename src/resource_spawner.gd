@@ -1,6 +1,6 @@
 extends Node
 
-export var starting_resources_count = 1
+export var starting_resources_count = 3
 
 const MIN_RESOURCE = 3
 
@@ -26,7 +26,8 @@ func _spawn_resources():
 	if  resources_count <= MIN_RESOURCE:
 		var new_resource_count = max(MIN_RESOURCE, unit_spawner.get_unit_count() / 3)
 		print("spawning %s new resources" % new_resource_count)
-		_spawn_resource(viewport.size)
+		for _n in range(new_resource_count):
+			_spawn_resource(viewport.size)
 
 
 func _spawn_resource(viewport_size):
@@ -35,6 +36,11 @@ func _spawn_resource(viewport_size):
 	var new_resource = RESOURCE.instance()
 	new_resource.global_translate(rnd_pos)
 
-	new_resource.connect("harvested", self, "_spawn_resources")
+	new_resource.connect("harvested", self, "_respawn_resources")
 
 	objects_root.call_deferred("add_child", new_resource)
+
+func _respawn_resources():
+	resources_count -= 1
+	if resources_count < MIN_RESOURCE:
+		_spawn_resources()
