@@ -212,5 +212,5 @@ func _on_ResourceDetector_detected(resource):
 
 
 func _on_MacrabronDetector_detected(macrabron):
-	if _current_state == States.SEEKING and not is_gilet():
+	if _current_state != States.SEEKING and is_gilet():
 		_nav_handler.seek(macrabron)

@@ -183,6 +183,6 @@ script = ExtResource( 1 )
 [connection signal="detected" from="MacrabronDetector" to="." method="_on_MacrabronDetector_detected"]
 [connection signal="timeout" from="MoraleBar/IdleMoraleTimer" to="MoraleBar" method="_on_IdleMoraleTimer_timeout"]
 [connection signal="death" from="HealthBar" to="." method="_on_HealthBar_death"]
-[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="MoraleBar" method="_on_GatherTimer_gather_ticked"]
+[connection signal="gather_ticked" from="GatherLabel/GatherTimer" to="GatherLabel" method="_on_GatherTimer_gather_ticked"]
 [connection signal="timeout" from="GatherLabel/GatherTimer" to="GatherLabel/GatherTimer" method="_on_CollectTimer_timeout"]

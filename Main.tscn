@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/units/worker/Worker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://res/sprites/scene.png" type="Texture" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://res/audio/flaMEnTALco.ogg" type="AudioStream" id=12]
 [ext_resource path="res://src/ui/sound_toggle.gd" type="Script" id=13]
 [ext_resource path="res://src/units/macrabron/Macrabron.tscn" type="PackedScene" id=14]
-[ext_resource path="res://src/objects/MoneyPrinter.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/ui/macrabron_health_bar.tscn" type="PackedScene" id=16]
 [ext_resource path="res://res/fonts/PressStart2B-Regular.tres" type="DynamicFontData" id=17]
 [ext_resource path="res://res/fonts/PressStart2B-Regular-font.tres" type="DynamicFont" id=18]
@@ -57,16 +56,28 @@ initial_morale = 0
 [node name="Trees" type="Node" parent="Background"]
 
 [node name="StaticBody2D" parent="Background/Trees" instance=ExtResource( 19 )]
-position = Vector2( 1171.69, 182.228 )
+position = Vector2( 1201.42, 182.228 )
 
 [node name="StaticBody2D2" parent="Background/Trees" instance=ExtResource( 19 )]
-position = Vector2( 428.023, 181.168 )
+position = Vector2( 591.442, 166.336 )
 
 [node name="StaticBody2D3" parent="Background/Trees" instance=ExtResource( 19 )]
-position = Vector2( 278.851, 180.852 )
+position = Vector2( 278.723, 184.491 )
+
+[node name="StaticBody2D8" parent="Background/Trees" instance=ExtResource( 19 )]
+position = Vector2( 444.151, 202.258 )
 
 [node name="StaticBody2D4" parent="Background/Trees" instance=ExtResource( 19 )]
-position = Vector2( 72.1628, 181.743 )
+position = Vector2( 111.22, 199.382 )
+
+[node name="StaticBody2D5" parent="Background/Trees" instance=ExtResource( 19 )]
+position = Vector2( 744.352, 182.357 )
+
+[node name="StaticBody2D6" parent="Background/Trees" instance=ExtResource( 19 )]
+position = Vector2( 1066.11, 151.122 )
+
+[node name="StaticBody2D7" parent="Background/Trees" instance=ExtResource( 19 )]
+position = Vector2( 934.338, 196.014 )
 
 [node name="ResourceSpawner" type="Node" parent="."]
 script = ExtResource( 8 )
@@ -140,38 +151,39 @@ clip_text = true
 script = ExtResource( 10 )
 
 [node name="VSplitContainer" type="VSplitContainer" parent="GUI"]
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 332.0
-margin_bottom = 68.0
+margin_left = 23.0
+margin_top = 11.0
+margin_right = 525.0
+margin_bottom = 90.0
 custom_constants/separation = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer2" type="MarginContainer" parent="GUI/VSplitContainer"]
-margin_right = 676.0
-margin_bottom = 36.0
+margin_right = 502.0
+margin_bottom = 26.0
 
 [node name="MoneyLabel" type="Label" parent="GUI/VSplitContainer/HBoxContainer2"]
-margin_right = 676.0
-margin_bottom = 36.0
+margin_right = 502.0
+margin_bottom = 26.0
 rect_min_size = Vector2( 100, 20 )
 custom_fonts/font = ExtResource( 18 )
 text = "Money: 0"
 script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/VSplitContainer"]
-margin_top = 44.0
-margin_right = 676.0
-margin_bottom = 80.0
+margin_top = 34.0
+margin_right = 502.0
+margin_bottom = 79.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SoundToggleLabel" type="Label" parent="GUI/VSplitContainer/HBoxContainer"]
-margin_right = 648.0
-margin_bottom = 36.0
+margin_top = 9.0
+margin_right = 468.0
+margin_bottom = 35.0
 custom_fonts/font = ExtResource( 18 )
 text = "Toggle the sounds:"
 __meta__ = {
@@ -179,10 +191,11 @@ __meta__ = {
 }
 
 [node name="SoundToggle" type="CheckBox" parent="GUI/VSplitContainer/HBoxContainer"]
-margin_left = 652.0
-margin_right = 676.0
-margin_bottom = 36.0
+margin_left = 472.0
+margin_right = 496.0
+margin_bottom = 45.0
 pressed = true
+expand_icon = true
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -256,8 +269,5 @@ max_value = 1000.0
 value = 1000.0
 damage = 35
 atk_freq = 0.75
-
-[node name="StaticBody" parent="." instance=ExtResource( 15 )]
-position = Vector2( 743.876, 91.9239 )
 [connection signal="toggled" from="GUI/VSplitContainer/HBoxContainer/SoundToggle" to="GUI/VSplitContainer/HBoxContainer/SoundToggle" method="_on_SoundToggle_toggled"]
 [connection signal="death" from="GUI/MacrabronHealthControl/HSplitContainer/HealthBar" to="." method="_on_HealthBar_death"]

@@ -8,7 +8,7 @@ const RESOURCE = preload("res://src/objects/MoneyPrinter.tscn")
 
 onready var game_manager = SceneFinder.get_game_manager()
 onready var unit_spawner = game_manager.get_node("UnitSpawner")
-onready var objects_root = game_manager.get_node("Background")
+onready var objects_root = game_manager
 
 var resources_count = starting_resources_count
 
@@ -24,14 +24,17 @@ func _spawn_resources():
 	var viewport = get_viewport()
 
 	if  resources_count <= MIN_RESOURCE:
-		var new_resource_count = max(MIN_RESOURCE, unit_spawner.get_unit_count() / 3)
+		var new_resource_count = min(MIN_RESOURCE, unit_spawner.get_unit_count() / 3)
 		print("spawning %s new resources" % new_resource_count)
 		for _n in range(new_resource_count):
 			_spawn_resource(viewport.size)
 
 
 func _spawn_resource(viewport_size):
-	var rnd_pos = Vector2(rand_range(200, viewport_size.x - 200), rand_range(200, viewport_size.y - 200))
+	if resources_count >= 5:
+		return
+	
+	var rnd_pos = Vector2(rand_range(200, viewport_size.x), rand_range(200, viewport_size.y))
 
 	var new_resource = RESOURCE.instance()
 	new_resource.global_translate(rnd_pos)

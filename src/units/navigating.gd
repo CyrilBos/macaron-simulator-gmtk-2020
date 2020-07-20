@@ -34,7 +34,7 @@ func seek(enemy, seek_enemy_sound): # private?
 		print("[BUG] trying to seek a null enemy")
 		return
 	
-	if enemy != _target_node and enemy.get_entity_type() == Entity.Types.ENEMY:
+	if enemy != _target_node:
 		print("gilet %s seeks %s" % [self, enemy])
 		seek_enemy_sound.play()
 		

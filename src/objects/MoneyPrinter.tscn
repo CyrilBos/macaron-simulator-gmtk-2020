@@ -35,7 +35,6 @@ animations = [ {
 extents = Vector2( 30.7137, 16.2543 )
 
 [node name="StaticBody" type="StaticBody2D"]
-scale = Vector2( 1.98989, 1.98207 )
 input_pickable = true
 script = ExtResource( 3 )
 
