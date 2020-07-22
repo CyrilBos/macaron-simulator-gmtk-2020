@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 It was at this moment VikFro didn't know, he fucked up:
 
 ```# TODO: Finite State Machine?```
